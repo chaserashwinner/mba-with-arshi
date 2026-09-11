@@ -1,0 +1,764 @@
+{
+  "language": {
+    "en": "EN",
+    "hi": "हिन्दी"
+  },
+  "theme": {
+    "label": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "common": {
+    "brandName": "StudentKhabri",
+    "openTool": "Open tool"
+  },
+  "coupon": {
+    "placeholder": "Coupon Code",
+    "apply": "APPLY",
+    "applied": "Coupon applied successfully.",
+    "removed": "Coupon removed.",
+    "invalid": "Invalid coupon code.",
+    "expired": "This coupon has expired.",
+    "usageExceeded": "Coupon usage limit has been reached.",
+    "notApplicable": "This coupon is not applicable here.",
+    "inactive": "This coupon is inactive.",
+    "invalidProduct": "This coupon cannot be validated for this product.",
+    "unableToValidateProduct": "Unable to validate coupon for this product.",
+    "networkError": "Network error. Please try again.",
+    "failed": "Failed to apply coupon",
+    "discountAmount": "Discount amount",
+    "finalPayable": "Final payable amount",
+    "appliedBadge": "Applied",
+    "remove": "Remove"
+  },
+  "nav": {
+    "home": "Home",
+    "predictors": "Predictors",
+    "choice": "Choice",
+    "choiceTools": "Choice Tools",
+    "collegeFinder": "College Finder",
+    "collegePreferenceList": "College Preference List",
+    "freeMocks": "Free Mocks",
+    "pdfs": "PDFs",
+    "samplePapers": "Sample Papers",
+    "mentorships": "Mentorships",
+    "mpDteMentorship": "MP DTE Mentorship",
+    "guidance": "Guidance",
+    "comboPlans": "Combo Plans",
+    "orders": "Orders",
+    "tools": "Tools",
+    "courses": "Courses",
+    "profile": "Profile",
+    "profileSettings": "Profile Settings",
+    "orderHistory": "Order History",
+    "buyInBulk": "Buy in Bulk",
+    "makePayment": "Make Payment",
+    "yourRanksScores": "Your Ranks & Scores",
+    "login": "Login",
+    "logout": "Logout",
+    "selectCourse": "Select Course",
+    "changeCourse": "Change course",
+    "courseLocked": "Course cannot be changed while viewing this tool"
+  },
+  "profile": {
+    "ranks": "Ranks",
+    "scores": "Scores",
+    "noSavedInputs": "No saved ranks or scores yet"
+  },
+  "auth": {
+    "loginRequired": "You need to login to use analysis form",
+    "loginSignup": "Login/Signup",
+    "phone": "Phone",
+    "otp": "OTP",
+    "next": "Next",
+    "otpIncorrect": "OTP incorrect!",
+    "otpSent": "OTP sent to your phone number!",
+    "resendOtpIn": "Resend OTP in {seconds} seconds.",
+    "resendOtp": "Resend OTP",
+    "termsPrefix": "By continuing you agree to the terms & conditions of"
+  },
+  "home": {
+    "hero": {
+      "usedBy": "Used by 50,000+ counselling aspirants",
+      "headline": "Counselling Made Easy.",
+      "description": "StudentKhabri Helped More Than 1 Lakh+ Students Get Their Dream Colleges For More Than 10+ Years",
+      "tryPredictor": "Try Predictors",
+      "exploreTools": "Explore Tools",
+      "more": "More",
+      "cutoffBacked": "Cutoff-backed",
+      "privateSecure": "Private & secure",
+      "expertGuidance": "Expert guidance",
+      "liveCutoffInsights": "Live cutoff insights",
+      "predictionSnapshot": "Prediction Snapshot",
+      "rankLabel": "Rank {rank}",
+      "highChance": "High Chance",
+      "smartChoice": "Smart Choice",
+      "backupSafe": "Backup Safe",
+      "collegesCount": "{count} colleges",
+      "toShortlist": "to shortlist",
+      "filtersRounds": "filters & rounds"
+    },
+    "courseTools": {
+      "quickAccess": "Quick access",
+      "heading": "Counselling Tools"
+    },
+    "howItWorks": {
+      "eyebrow": "How it works",
+      "heading": "Know Best Colleges On Your Profile, Rank, Quota & Budget !",
+      "stepLabel": "Step {step}",
+      "enterRank": "Enter Rank",
+      "enterRankText": "Add exam, rank, category and state details once.",
+      "getColleges": "Get Colleges",
+      "getCollegesText": "See realistic options sorted by chance and branch fit.",
+      "fillChoicesSmartly": "Fill Choices Smartly",
+      "fillChoicesSmartlyText": "Build an ordered list that balances dream, safe and backup choices."
+    },
+    "mentor": {
+      "heading": "Guidance from Experts Who Know Counselling Inside Out",
+      "subheading": "Expert Guidance",
+      "experience": "{years}+ years counselling experience",
+      "roles": {
+        "medical": "Medical Counsellor",
+        "engineering": "Engineering Counsellor",
+        "mba": "MBA Counsellor"
+      },
+      "course": {
+        "medical": "Medical",
+        "engineering": "Engineering",
+        "mba": "MBA"
+      }
+    },
+    "testimonials": {
+      "eyebrow": "Student proof",
+      "heading": "Reviews from Our Students!",
+      "play": "Play",
+      "pause": "Pause",
+      "videoAlt": "Student testimonial video",
+      "fallbackText": "StudentKhabri helped me choose colleges with more confidence.",
+      "defaultStudent": "StudentKhabri student",
+      "aspirant": "Counselling aspirant"
+    },
+    "features": {
+      "eyebrow": "Feature highlights",
+      "heading": "Tools built for counselling decisions, not browsing.",
+      "description": "Every section is tuned for the questions students ask under pressure: where can I get in, what should I prioritize, and what should I avoid missing.",
+      "accurateCutoffData": "Accurate Cutoff Data",
+      "accurateCutoffDataText": "Round-wise data patterns for better college and branch decisions.",
+      "categoryFiltering": "Category Filtering",
+      "categoryFilteringText": "Filter by category, quota, state, counselling and seat type.",
+      "aiBasedPrediction": "AI-Based Prediction",
+      "aiBasedPredictionText": "Chance buckets help students quickly separate dream and safe options.",
+      "choiceListStrategy": "Choice List Strategy",
+      "choiceListStrategyText": "Prioritize options with a counselling-ready order, not a random list.",
+      "guidanceSupport": "Guidance Support",
+      "guidanceSupportText": "Counsellors help remove confusion during form filling windows.",
+      "securePurchase": "Secure Purchase",
+      "securePurchaseText": "Login-based access keeps purchased tools attached to the student."
+    },
+    "pricing": {
+      "badge": "Best-selling counselling tool",
+      "limitedLaunchPrice": "Limited launch price",
+      "description": "One tool can save hours of confusion during the counselling window.",
+      "unlockPredictor": "Unlock Predictor"
+    },
+    "finalCta": {
+      "eyebrow": "Final push",
+      "heading": "Start Your Counselling Journey Now",
+      "description": "Know where you stand, shortlist faster and avoid last-minute choice filling mistakes.",
+      "tryPredictor": "Try Predictors",
+      "talkToCounsellor": "Talk to Counsellor"
+    },
+    "stickyCta": {
+      "eyebrow": "Counselling starts soon",
+      "unlockPredictor": "Unlock Predictor at ₹{amount}",
+      "unlockNamedPredictor": "Unlock {name} at ₹{amount}"
+    }
+  },
+  "tools": {
+    "default": {
+      "collegePredictor": {
+        "title": "College Predictor",
+        "description": "Get a course-aware shortlist and counselling chances before rounds begin.",
+        "cta": "Open predictor",
+        "badge": "Popular"
+      },
+      "collegeFinder": {
+        "title": "College Finder",
+        "description": "Browse MBBS and BDS colleges by state, ownership, quota, fees, seats and cutoff context before shortlisting.",
+        "cta": "Explore colleges",
+        "badge": "MBBS + BDS"
+      },
+      "neetEligibility": {
+        "title": "NEET Admission Eligibility Checker",
+        "description": "Check admission eligibility based on NEET rank, category, budget, and domicile state.",
+        "cta": "Check Eligibility",
+        "badge": "FREE"
+      },
+      "medicineAbroad": {
+        "title": "Medicine Abroad",
+        "description": "Explore MBBS abroad options, countries, universities, fees, eligibility and admission guidance.",
+        "cta": "Explore abroad options",
+        "badge": "MBBS Abroad"
+      },
+      "choiceFilling": {
+        "title": "Choice Filling Tool",
+        "description": "Convert your shortlist into a smart preference order with dream, safe and backup choices.",
+        "cta": "Build choice list",
+        "badge": "Smart order"
+      },
+      "collegePreference": {
+        "title": "College Preference List",
+        "description": "Build and manage your college preference order based on rank, category, and state filters.",
+        "cta": "Build preference list",
+        "badge": "Preference builder"
+      },
+      "importantPdfs": {
+        "title": "Important PDFs",
+        "description": "Browse essential notices, handbooks and counselling documents without digging around.",
+        "cta": "View PDFs",
+        "badge": "Must read"
+      },
+      "mentorships": {
+        "title": "Mentorships",
+        "description": "Get expert guidance for strategy, shortlist review and round-wise decision support.",
+        "cta": "Talk to mentor",
+        "badge": "Expert help"
+      },
+      "mpDteMentorship": {
+        "title": "MP DTE Expert Choice Filling Program",
+        "description": "Expert-guided MP DTE choice filling assistance",
+        "cta": "Open MP DTE Form",
+        "badge": "Expert Choice"
+      }
+    }
+  },
+  "eligibility": {
+    "meta": {
+      "title": "NEET Admission Eligibility Checker",
+      "description": "Check NEET admission eligibility by rank, category, budget, and domicile state."
+    },
+    "hero": {
+      "badge": "Medical only",
+      "free": "FREE",
+      "freeTool": "Free Tool",
+      "medicalOnly": "Medical Only",
+      "predictorConnected": "Predictor Connected",
+      "quick": "Quick check",
+      "title": "NEET Admission Eligibility Checker",
+      "subtitle": "Check where you may have admission chances in under 30 seconds.",
+      "panelTitle": "Fast eligibility scan",
+      "panelText": "Enter details, check chances, then open exact college predictions."
+    },
+    "steps": {
+      "rank": {
+        "title": "Rank",
+        "description": "NEET rank + category"
+      },
+      "budget": {
+        "title": "Budget",
+        "description": "Fee comfort range"
+      },
+      "state": {
+        "title": "Domicile",
+        "description": "State quota context"
+      }
+    },
+    "form": {
+      "eyebrow": "Quick Eligibility Check",
+      "title": "Enter details",
+      "description": "Check matching admission opportunities by rank, category, budget, and domicile state.",
+      "time": "Takes under 30 seconds",
+      "stepCount": "Step {step} of 3",
+      "saved": "Saved values",
+      "review": "Review"
+    },
+    "fields": {
+      "rank": "NEET Rank",
+      "category": "Category",
+      "selectCategory": "Select category",
+      "budget": "Budget",
+      "selectBudget": "Select budget range",
+      "domicile": "Domicile State",
+      "selectState": "Select domicile state",
+      "preference": "Admission Preference"
+    },
+    "preference": {
+      "government": "Government Only",
+      "governmentText": "AIQ and domicile quota",
+      "private": "Private Only",
+      "privateText": "Private and management route",
+      "both": "Government + Private",
+      "bothText": "Balanced counselling plan"
+    },
+    "validation": {
+      "rankRequired": "Please enter your NEET rank.",
+      "rankInvalid": "Enter a valid positive rank.",
+      "rankTooHigh": "Enter a rank below 20,00,000.",
+      "categoryRequired": "Please select your category.",
+      "budgetRequired": "Please select your budget range.",
+      "budgetInvalid": "Please select a supported budget range.",
+      "stateRequired": "Please select your domicile state."
+    },
+    "loading": {
+      "title": "Checking eligibility",
+      "description": "Matching your rank, category, budget, and domicile state with admission data."
+    },
+    "result": {
+      "eyebrow": "Eligibility Results",
+      "title": "Admission Opportunities",
+      "edit": "Edit details",
+      "emptyTitle": "No strong admission opportunities",
+      "empty": "No strong admission opportunities found based on your current inputs. Try adjusting budget, category filters, or speak with our counselling team.",
+      "eligibleStates": "Eligible States",
+      "stateShortlist": "State shortlist",
+      "domicile": "Domicile state",
+      "budget": "Suggested Budget Range",
+      "path": "Recommended Counselling Path",
+      "nextSteps": "Next steps",
+      "crossSellTitle": "Want exact college predictions?",
+      "crossSellText": "Use the Medical Predictor flow to move from broad eligibility signals to college-level choices.",
+      "predictorCta": "Open Medical Predictor",
+      "rankCta": "Try Predictors",
+      "score": "Eligibility Score",
+      "route": "Recommended Route",
+      "budgetMatch": "Budget Match",
+      "quota": "Quota",
+      "closingRank": "Closing Rank",
+      "closingMarks": "Closing Marks",
+      "annualFee": "Annual Fee",
+      "authority": "Counselling Authority",
+      "exactColleges": "Check Exact Colleges",
+      "predictorComingSoon": "Predictor Coming Soon",
+      "predictorUnavailableHint": "This predictor is not available yet.",
+      "talkExpert": "Talk to Expert"
+    },
+    "actions": {
+      "back": "Back",
+      "next": "Next",
+      "check": "Check Eligibility",
+      "checkMine": "Check My Eligibility",
+      "backToTools": "Back to tools"
+    },
+    "errors": {
+      "title": "Something went wrong",
+      "options": "Unable to load eligibility options.",
+      "result": "Unable to calculate eligibility right now."
+    }
+  },
+  "collegeFinder": {
+    "meta": {
+      "landingTitle": "College Finder for MBBS and BDS | StudentKhabri",
+      "landingDescription": "Explore MBBS and BDS colleges with filters for state, ownership, counselling, seats, fees, and cutoff context."
+    },
+    "courses": {
+      "mbbs": "MBBS",
+      "bds": "BDS",
+      "mbbsDescription": "Medical colleges offering undergraduate MBBS seats.",
+      "bdsDescription": "Dental colleges offering undergraduate BDS seats."
+    },
+    "landing": {
+      "title": "College Finder",
+      "eyebrow": "MBBS + BDS counselling research",
+      "heroTitle": "Find the right medical college before counselling pressure starts.",
+      "heroSubtitle": "Compare government, private, deemed, AIQ, state quota, seats, fees, and cutoff signals for MBBS and BDS colleges across India.",
+      "browseAll": "Browse colleges",
+      "exploreMbbs": "Explore MBBS",
+      "exploreBds": "Explore BDS",
+      "smartFilters": "Smart filters",
+      "filterShowcaseTitle": "Shortlist by what actually matters",
+      "whyEyebrow": "Why use College Finder",
+      "whyTitle": "A research layer made for medical counselling choices.",
+      "exploreByState": "Explore by State",
+      "stateTitle": "Start with the states you are eligible for.",
+      "viewAllStates": "View all filters",
+      "topMbbs": "Top MBBS colleges",
+      "viewMbbs": "View MBBS colleges",
+      "topBds": "Top BDS colleges",
+      "viewBds": "View BDS colleges",
+      "ctaEyebrow": "Ready to shortlist",
+      "ctaTitle": "Compare colleges, then move into predictors and preference planning.",
+      "ctaText": "Use College Finder as the browsing layer before rank-based tools and expert counselling.",
+      "stats": {
+        "colleges": "sample colleges",
+        "courses": "course tracks",
+        "states": "states covered",
+        "filters": "smart filters"
+      },
+      "features": {
+        "cutoffTitle": "Cutoff-backed shortlisting",
+        "cutoffText": "Compare colleges with NEET counselling, quota, and recent closing-rank context.",
+        "feesTitle": "Fee and quota clarity",
+        "feesText": "Separate government, private, deemed, management, NRI, and AIQ signals quickly.",
+        "profileTitle": "Built for counselling decisions",
+        "profileText": "Move from broad discovery to a focused college profile without changing tools."
+      }
+    },
+    "filters": {
+      "title": "Filters",
+      "resultCount": "{count} results",
+      "searchLabel": "Search colleges",
+      "searchPlaceholder": "Search by college name, city, state, quota...",
+      "clearSearch": "Clear search",
+      "courseType": "Course type",
+      "state": "State",
+      "governmentPrivate": "Government / Private",
+      "ownership": "Ownership",
+      "counsellingType": "Counselling type",
+      "feeRange": "Fee range",
+      "aiqEligibility": "AIQ eligibility",
+      "all": "All",
+      "yes": "Yes",
+      "no": "No",
+      "clearAll": "Clear filters",
+      "anyFee": "Any fee",
+      "underOneLakh": "Under 1 lakh",
+      "oneToFiveLakh": "1 to 5 lakh",
+      "fiveToTenLakh": "5 to 10 lakh",
+      "aboveTenLakh": "Above 10 lakh"
+    },
+    "stateGrid": {
+      "count": "{count} colleges"
+    },
+    "card": {
+      "aiq": "AIQ",
+      "seats": "Seats",
+      "fees": "Fees",
+      "rank": "Rank",
+      "viewDetails": "View details",
+      "savePlaceholder": "Save college",
+      "save": "Save",
+      "courses": "Courses"
+    },
+    "empty": {
+      "title": "No colleges found",
+      "description": "Try changing the course, state, fee, or counselling filters."
+    },
+    "errors": {
+      "loadTitle": "Unable to load colleges",
+      "loadDescription": "Please retry once. If the issue continues, the college API may be temporarily unavailable."
+    },
+    "listing": {
+      "title": "Find medical colleges",
+      "eyebrow": "College Finder",
+      "description": "Search and filter MBBS and BDS colleges by state, ownership, counselling, fee range, AIQ eligibility, and seats.",
+      "courseStateTitle": "{course} colleges in {state}",
+      "courseTitle": "{course} colleges",
+      "stateTitle": "Colleges in {state}",
+      "showing": "Showing {count} colleges"
+    },
+    "detail": {
+      "tabs": {
+        "overview": "Overview",
+        "courses": "Courses",
+        "fees": "Fees",
+        "cutoff": "Cutoff",
+        "facilities": "Facilities",
+        "gallery": "Gallery",
+        "contact": "Contact"
+      },
+      "overview": "Overview",
+      "established": "Established",
+      "university": "University",
+      "collegeType": "College type",
+      "totalSeats": "Total seats",
+      "hospitalBeds": "Hospital beds",
+      "notApplicable": "Not applicable",
+      "recognition": "Recognition",
+      "facilities": "Facilities",
+      "closingRank": "Closing rank",
+      "feeStructure": "Fee structure",
+      "annualRange": "Annual range",
+      "coursesOffered": "Courses offered",
+      "ownership": "Ownership",
+      "counselling": "Counselling",
+      "aiqEligible": "AIQ eligible",
+      "notFoundTitle": "College not found",
+      "notFoundDescription": "This college profile is not available in the current dataset.",
+      "course": "Course",
+      "duration": "Duration",
+      "mode": "Mode",
+      "cutoffSummary": "Cutoff summary",
+      "gallery": "Gallery",
+      "contactInfo": "Contact info",
+      "address": "Address",
+      "contact": "Contact",
+      "website": "Website",
+      "quickFacts": "Quick facts",
+      "counsellingEligibility": "Counselling eligibility",
+      "aiqQuota": "AIQ",
+      "stateQuota": "State quota",
+      "managementQuota": "Management quota",
+      "nriQuota": "NRI quota"
+    }
+  },
+  "medicineAbroad": {
+    "meta": {
+      "landingTitle": "Medicine Abroad Finder for MBBS and BDS | StudentKhabri",
+      "landingDescription": "Explore medicine abroad universities with filters for country, course, fees, hostel, scholarship, ranking, recognition, and Indian student support."
+    },
+    "courses": {
+      "all": "All",
+      "mbbs": "MBBS",
+      "bds": "BDS",
+      "mbbsDescription": "Medicine programs for Indian students studying overseas.",
+      "bdsDescription": "Dental programs from abroad universities and institutes."
+    },
+    "landing": {
+      "title": "Medicine Abroad Finder",
+      "eyebrow": "MBBS + BDS abroad research",
+      "heroTitle": "Find trusted medicine universities abroad with the checks that matter.",
+      "heroSubtitle": "Compare countries, courses, total fees, hostel support, scholarships, ranking, recognition, and Indian student readiness before shortlisting.",
+      "heroImageAlt": "Medical students",
+      "browseAll": "Browse universities",
+      "exploreMbbs": "Explore MBBS abroad",
+      "exploreBds": "Explore BDS abroad",
+      "decisionPanelEyebrow": "Abroad decision stack",
+      "decisionPanelTitle": "Compare recognition, cost, hostel, and support together.",
+      "whyEyebrow": "Why use Medicine Abroad Finder",
+      "whyTitle": "A medical-abroad research layer built for Indian counselling decisions.",
+      "featuredCountries": "Featured countries",
+      "countryTitle": "Start with the countries that fit your budget and comfort.",
+      "viewAllCountries": "View all filters",
+      "mbbsHighlights": "MBBS abroad highlights",
+      "highlightsTitle": "Keep eligibility, duration, hostel, and recognition visible.",
+      "topMbbs": "Top MBBS abroad universities",
+      "viewMbbs": "View MBBS abroad",
+      "topBds": "Top BDS abroad universities",
+      "viewBds": "View BDS abroad",
+      "ctaEyebrow": "Ready to compare",
+      "ctaTitle": "Shortlist abroad universities, then discuss the safer route with a counsellor.",
+      "ctaText": "Use Medicine Abroad Finder for discovery, then validate recognition, documentation, budget, and travel fit before applying.",
+      "stats": {
+        "countries": "countries",
+        "courses": "course tracks",
+        "checks": "decision checks",
+        "support": "student support"
+      },
+      "features": {
+        "recognitionTitle": "Recognition-first shortlisting",
+        "recognitionText": "Check NMC, WHO, ECFMG, and local licensing signals before comparing fee packages.",
+        "budgetTitle": "Budget clarity",
+        "budgetText": "Compare tuition, hostel, scholarship, and total-cost signals without mixing them.",
+        "supportTitle": "Indian student readiness",
+        "supportText": "Prioritize universities with hostel, food, documentation, visa, and student-support context."
+      },
+      "highlights": {
+        "durationTitle": "5 to 6 year programs",
+        "durationText": "Review program duration, internship rules, and language of instruction in one profile.",
+        "eligibilityTitle": "NEET and eligibility checks",
+        "eligibilityText": "Keep NEET qualification, PCB marks, age, and documentation requirements visible.",
+        "hostelTitle": "Hostel and safety context",
+        "hostelText": "Shortlist with accommodation, Indian food, campus support, and travel context."
+      }
+    },
+    "countryGrid": {
+      "count": "{count} colleges"
+    },
+    "filters": {
+      "title": "Filters",
+      "resultCount": "{count} results",
+      "searchLabel": "Search abroad colleges",
+      "searchPlaceholder": "Search by university, country, city, recognition...",
+      "clearSearch": "Clear search",
+      "courseType": "Course type",
+      "country": "Country",
+      "feeRange": "Fee range",
+      "ranking": "Ranking",
+      "hostel": "Hostel",
+      "scholarship": "Scholarship",
+      "all": "All",
+      "yes": "Yes",
+      "no": "No",
+      "clearAll": "Clear filters",
+      "anyFee": "Any fee",
+      "underTwentyLakh": "Under 20 lakh",
+      "twentyToThirtyFiveLakh": "20 to 35 lakh",
+      "thirtyFiveToFiftyLakh": "35 to 50 lakh",
+      "aboveFiftyLakh": "Above 50 lakh",
+      "anyRanking": "Any ranking",
+      "topThousand": "Top 1000",
+      "topFiveThousand": "Top 5000",
+      "topTenThousand": "Top 10000"
+    },
+    "card": {
+      "scholarship": "Scholarship",
+      "fees": "Fees",
+      "hostel": "Hostel",
+      "rank": "Rank",
+      "viewDetails": "View details",
+      "savePlaceholder": "Save university",
+      "save": "Save",
+      "saved": "Saved",
+      "durationNA": "Duration N/A",
+      "recognition": "Recognition"
+    },
+    "empty": {
+      "title": "No abroad colleges found",
+      "description": "Try changing the course, country, fee, hostel, scholarship, or ranking filters."
+    },
+    "errors": {
+      "loadTitle": "Unable to load abroad colleges",
+      "loadDescription": "Please retry once. If the issue continues, the medicine abroad API may be temporarily unavailable."
+    },
+    "listing": {
+      "title": "Find medicine abroad colleges",
+      "eyebrow": "Medicine Abroad Finder",
+      "description": "Search and filter medicine abroad universities by country, course, fee range, hostel, scholarship, ranking, recognition, and student support.",
+      "courseCountryTitle": "{course} colleges in {country}",
+      "courseTitle": "{course} abroad colleges",
+      "countryTitle": "Medicine colleges in {country}",
+      "showing": "Showing {count} colleges"
+    },
+    "pagination": {
+      "pageStatus": "Page {page} of {total}",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "detail": {
+      "tabs": {
+        "overview": "Overview",
+        "fees": "Fees",
+        "hostel": "Hostel",
+        "eligibility": "Eligibility",
+        "recognition": "Recognition",
+        "facilities": "Facilities",
+        "gallery": "Gallery",
+        "contact": "Contact"
+      },
+      "overview": "Overview",
+      "noOverview": "Overview information is being updated.",
+      "coursesOffered": "Courses offered",
+      "country": "Country",
+      "city": "City",
+      "medium": "Medium",
+      "duration": "Duration",
+      "universityType": "University type",
+      "established": "Established",
+      "fees": "Fees",
+      "ranking": "Ranking",
+      "hostel": "Hostel",
+      "quickFacts": "Quick facts",
+      "studentReadiness": "Student readiness",
+      "hostelSupport": "Hostel support",
+      "englishMedium": "English medium",
+      "recognitionReview": "Recognition review",
+      "feeStructure": "Fee structure",
+      "totalFees": "Total fees",
+      "tuitionFees": "Tuition fees",
+      "hostelFees": "Hostel fees",
+      "hostelAvailable": "Hostel available",
+      "hostelUnavailable": "Hostel status unavailable",
+      "hostelDescriptionFallback": "Hostel, food, and accommodation details will appear here when available from the university dataset.",
+      "eligibility": "Eligibility",
+      "eligibilityFallback": "Eligibility details are being updated. Confirm NEET qualification, PCB marks, age, passport, visa, and documentation before applying.",
+      "recognition": "Recognition",
+      "recognitionFallback": "Recognition details are being updated.",
+      "facilities": "Facilities",
+      "facilitiesFallback": "Facilities data is being updated.",
+      "indianStudentSupport": "Indian student support",
+      "supportFallback": "Indian student support details are being updated.",
+      "gallery": "Gallery",
+      "contactInfo": "Contact info",
+      "address": "Address",
+      "contact": "Contact",
+      "website": "Website",
+      "notFoundTitle": "College not found",
+      "notFoundDescription": "This abroad college profile is not available in the current dataset."
+    }
+  },
+  "rankPredictor": {
+    "title": "Predictors",
+    "description": "Predict your expected rank based on your score",
+    "cta": "Predict Rank",
+    "badge": "Login required",
+    "newBadge": "NEW",
+    "medicalOnly": "Available only for Medical course",
+    "outOfRange": "Scores outside the uploaded range will return no prediction.",
+    "disclaimer": "Rank predictions are indicative and may vary by ±15%."
+  },
+  "budgetPredictor": {
+    "title": "Budget Predictor",
+    "description": "Estimate the expected MBBS admission budget based on your rank, category and counselling preferences.",
+    "cta": "Predict Budget",
+    "badge": "Login required",
+    "newBadge": "NEW",
+    "medicalOnly": "Available only for Medical course"
+  },
+  "try_rank_predictor": "Try Predictors",
+  "try_rank_predictor_2026": "Try Predictors",
+  "try_predictors": "Try Predictors",
+  "rank_predictor": "Predictors",
+  "predict_rank": "Predict Rank",
+  "budget_predictor": "Budget Predictor",
+  "predict_budget": "Predict Budget",
+  "predictors_title": "Predictors",
+  "predictors_desc": "Know the best college at your Rank. Our data driven predictor tool will help you to make the right decision for your career.",
+  "search_predictors": "Search Predictors...",
+  "choice_tools_title": "Choice Filling Tools",
+  "choice_tools_desc": "Our Choice filling tool simplifies your decision of choosing the right college and right branch at your rank.",
+  "search_choice_tools": "Search Choice tools...",
+  "pdfs_title": "Important PDFs",
+  "pdfs_desc": "Maximize your college application success. Our pdfs provide strategic guidance, insider tips, and help you navigate the complex admissions process.",
+  "search_pdfs": "Search Important Pdfs...",
+  "mentorship_title": "Mentorships",
+  "mentorship_desc": "Unlock your potential with personalized mentorship. Get expert guidance, tailored support, and the insights you need to achieve your goals.",
+  "search_mentorship": "Search Mentorships...",
+  "plans_title": "Combo Plans",
+  "plans_desc": "Your complete college success toolkit. Get expert guidance, personalized predictors, strategic courses, and the support you need to find and get into your dream school.",
+  "search_combo_plans": "Search Combo Plans...",
+  "courses_title": "Courses",
+  "courses_desc": "Maximize your college application success. Our courses provide strategic guidance, insider tips, and help you navigate the complex admissions process.",
+  "no_courses": "No courses for this course yet!",
+  "search_button": "Search",
+  "reset": "Reset",
+  "view": "View",
+  "open": "Open",
+  "predict_now": "Predict Now",
+  "use_tool": "Use Choice Tool",
+  "purchase": "Purchase",
+  "share": "Share",
+  "copy": "Copy",
+  "close": "Close",
+  "free": "Free",
+  "purchased": "Purchased",
+  "paid": "Paid",
+  "for_free": "For Free",
+  "loading": "Loading...",
+  "retry": "Retry",
+  "no_predictors": "No predictors for this course yet!",
+  "no_choice_tools": "No choice tools for this course yet!",
+  "no_plans": "No plans for this course yet!",
+  "no_search_results": "No search results found!",
+  "support_predictor": "Predictor",
+  "support_mentorships": "Mentorships",
+  "support_choice_tools": "Choice Tools",
+  "support_college_preference_list": "College Preference List",
+  "support_plans": "Plans",
+  "support_pdfs": "Important PDFs",
+  "purchases_title": "Purchases",
+  "purchases_desc": "A list of your previous purchases.",
+  "no_purchases": "No items purchased yet.",
+  "discount_price": "Get it at the discounted price of:",
+  "discounted_fees": "Now at a discounted fees of:",
+  "go_to_course": "Go to Course",
+  "go_to_pdf": "Go to PDF",
+  "go_to_pdfs": "Go to PDFs",
+  "go_to_predictor": "Go to Predictor",
+  "go_to_tool": "Go to Tool",
+  "go_to_choice_tool": "Go to Choice Tool",
+  "go_to_plan": "Go to Plan",
+  "go_to_plans": "Go to Plans",
+  "related_predictors": "Related Predictors",
+  "related_tool": "Related Tool",
+  "related_pdfs": "Related PDFs",
+  "related_courses": "Related Courses",
+  "share_predictor": "Share Predictor",
+  "share_tool": "Share Tool",
+  "scan_to_open_predictor": "Scan to open this predictor",
+  "scan_to_open_tool": "Scan to open this tool",
+  "link_copied": "Link copied to clipboard!",
+  "read_more": "Read more",
+  "show_less": "Show Less",
+  "plan_content": "Plan Content"
+}

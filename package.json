@@ -1,0 +1,27 @@
+{
+  "name": "mba-with-arshi",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Arshi Khan — MBA Counselor Portfolio Website",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "start": "node .output/server/index.mjs"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "latest",
+    "@nuxtjs/tailwindcss": "^6.8.0",
+    "nuxt": "^3.8.1",
+    "vue": "^3.3.8",
+    "vue-router": "^4.2.5"
+  },
+  "dependencies": {
+    "@formkit/auto-animate": "^0.8.0",
+    "@heroicons/vue": "^2.2.0",
+    "dotenv": "^17.4.1"
+  }
+}

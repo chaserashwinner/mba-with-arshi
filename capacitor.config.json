@@ -1,0 +1,14 @@
+{
+  "appId": "com.studentkhabri.newapp",
+  "appName": "Student Khabri",
+  "webDir": ".output/public",
+
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "PushNotifications": {
+      "presentationOptions": ["badge", "sound", "alert"]
+    }
+  }
+}

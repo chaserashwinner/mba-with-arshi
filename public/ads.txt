@@ -1,0 +1,10 @@
+# StudentKhabri Google AdSense ads.txt
+#
+# IMPORTANT: AdSense publisher credentials are not yet configured.
+# Keeping AdSense disabled until real production credentials are received.
+#
+# When real AdSense publisher credentials are available:
+# 1. Uncomment the line below
+# 2. Replace 'pub-0000000000000000' with your real Google AdSense Publisher ID (e.g. pub-1234567890123456)
+#
+# google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0

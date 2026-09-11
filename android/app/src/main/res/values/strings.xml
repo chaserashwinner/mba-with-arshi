@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<resources>
+    <string name="app_name">Student Khabri</string>
+    <string name="title_activity_main">Student Khabri</string>
+    <string name="package_name">com.studentkhabri.newapp</string>
+    <string name="custom_url_scheme">com.studentkhabri.newapp</string>
+    <string name="default_notification_channel_id">default_channel</string>
+</resources>

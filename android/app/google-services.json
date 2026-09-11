@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1076762304527",
+    "project_id": "studentkhabri-fff1e",
+    "storage_bucket": "studentkhabri-fff1e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1076762304527:android:c4345b475d30588420c37a",
+        "android_client_info": {
+          "package_name": "com.studentkhabri.newapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIYhnYjjeuxLG7yiCvdnVcuXEHU5GMTRY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

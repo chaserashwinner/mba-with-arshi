@@ -1,0 +1,40 @@
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
+dist
+
+# Node dependencies
+node_modules
+
+# Legacy & Temp archives
+archived_legacy
+archived_pages
+tmp-asset-verification
+tmp-navbar-check
+127.0.0.1
+3009
+3010
+3015
+3016
+3039
+outputs
+artifacts
+UPTAC_OR_CR_2026_27.log
+avi.txt
+
+# Environment & Config
+.env
+.env.local
+
+# Logs
+logs
+*.log
+
+# Misc
+.DS_Store
+.fleet
+.idea
+.vscode
