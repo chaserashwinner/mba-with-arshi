@@ -100,9 +100,9 @@ onUnmounted(() => {
       </div>
     </div>
 
-    <!-- Right Side: 3D Perspective WebGL Character Walk Scene -->
-    <div class="hero-visual" aria-label="MBA Counselor 3D Perspective Walk Scene">
-      <Hero3DScene :tiltStyle="tiltStyle" />
+    <!-- Right Side: MotionSites LTX Video Inspired Cinematic Character Visual -->
+    <div class="hero-visual" aria-label="MBA Counselor Cinematic Video Visual">
+      <HeroCinematicVisual :tiltStyle="tiltStyle" />
     </div>
   </section>
 </template>

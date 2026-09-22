@@ -1,193 +1,223 @@
 <script setup lang="ts">
+import { ref, onMounted, onUnmounted } from 'vue';
 import { PORTFOLIO_DATA } from '~/data/portfolio';
 
 const personal = PORTFOLIO_DATA.personal;
 const emit = defineEmits(['toggle-menu']);
 
-function handleOpenMenu() {
-  emit('toggle-menu');
+const isScrolled = ref(false);
+
+function checkScroll() {
+  isScrolled.value = window.scrollY > 30;
 }
+
+onMounted(() => {
+  window.addEventListener('scroll', checkScroll, { passive: true });
+  checkScroll();
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', checkScroll);
+});
 </script>
 
 <template>
-  <header class="site-header" id="top">
-    <a class="brand" href="#top" aria-label="MBA With Arshi home">
-      <span class="brand-mark">A</span>
-      <span class="brand-copy">
-        <strong>{{ personal.brandName }}</strong>
-        <small>{{ personal.tagline }}</small>
-      </span>
-    </a>
+  <header 
+    class="site-header"
+    :class="{ 'header-scrolled': isScrolled }"
+  >
+    <div class="header-inner">
+      <a class="brand" href="#top" aria-label="MBA With Arshi home">
+        <span class="brand-logo-mark">A</span>
+        <span class="brand-text">
+          <strong class="brand-name">{{ personal.brandName }}</strong>
+          <small class="brand-tagline">{{ personal.tagline }}</small>
+        </span>
+      </a>
 
-    <nav class="desktop-nav" aria-label="Main navigation">
-      <a href="#find-colleges">Find Colleges</a>
-      <a href="#videos">Videos</a>
-      <a href="#guides">Exam Guides</a>
-      <a href="#about">About Arshi</a>
-    </nav>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="#find-colleges" class="nav-link">Find Colleges</a>
+        <a href="#exams" class="nav-link">MBA Exams</a>
+        <a href="#guidance" class="nav-link">Guidance</a>
+        <a href="#about" class="nav-link">About Arshi</a>
+      </nav>
 
-    <a class="header-cta" href="#counselling">
-      Get Counselling
-    </a>
+      <div class="header-actions">
+        <a class="button button-primary header-cta" href="#counselling">
+          Get Counselling <span aria-hidden="true">→</span>
+        </a>
 
-    <button 
-      class="menu-button" 
-      aria-label="Open menu" 
-      @click="handleOpenMenu"
-    >
-      <span></span>
-      <span></span>
-    </button>
+        <button 
+          class="mobile-menu-btn" 
+          aria-label="Toggle navigation menu"
+          @click="emit('toggle-menu')"
+        >
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
   </header>
 </template>
 
 <style scoped>
 .site-header {
-  height: 82px;
-  padding: 0 max(5vw, 24px);
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 30px;
-  border-bottom: 1px solid var(--line);
-  background: rgba(247, 244, 255, 0.92);
-  backdrop-filter: blur(16px);
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 30;
+  left: 0;
+  right: 0;
+  height: 80px;
+  z-index: 50;
+  transition: background-color 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease, height 0.3s ease;
+  border-bottom: 1px solid transparent;
+}
+
+.header-scrolled {
+  height: 72px;
+  background: rgba(7, 5, 13, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.header-inner {
+  max-width: 1340px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 max(5vw, 24px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
 }
 
 .brand {
-  display: inline-flex;
-  width: fit-content;
+  display: flex;
   align-items: center;
-  gap: 11px;
+  gap: 12px;
 }
 
-.brand-mark {
-  width: 42px;
-  height: 42px;
+.brand-logo-mark {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--primary);
+  color: #ffffff;
   display: grid;
   place-items: center;
-  color: white;
-  background: linear-gradient(145deg, var(--violet), var(--magenta));
-  border-radius: 12px 12px 4px 12px;
-  font-size: 1.35rem;
+  font-size: 1.15rem;
   font-weight: 900;
-  box-shadow: 0 8px 24px rgba(98, 36, 233, 0.3);
+  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.35);
 }
 
-.brand-copy {
+.brand-text {
   display: flex;
   flex-direction: column;
-  line-height: 1.06;
+  line-height: 1.15;
 }
 
-.brand-copy strong {
+.brand-name {
   font-size: 0.98rem;
+  font-weight: 800;
+  color: #ffffff;
   letter-spacing: -0.02em;
-  color: var(--ink);
 }
 
-.brand-copy small {
-  margin-top: 4px;
-  color: var(--muted);
-  font-size: 0.65rem;
+.brand-tagline {
+  margin-top: 2px;
+  font-size: 0.62rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.09em;
+  letter-spacing: 0.1em;
+  color: var(--ink-dark-muted);
 }
 
 .desktop-nav {
   display: flex;
   align-items: center;
-  gap: 30px;
-  font-size: 0.88rem;
-  font-weight: 650;
-  color: var(--ink);
+  gap: 28px;
+  padding: 6px 20px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.desktop-nav a {
+.nav-link {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
   position: relative;
   transition: color 0.2s ease;
 }
 
-.desktop-nav a:hover {
-  color: var(--violet);
-}
-
-.desktop-nav a::after {
-  content: "";
+.nav-link::after {
+  content: '';
   position: absolute;
+  bottom: -4px;
   left: 0;
-  right: 100%;
-  bottom: -8px;
+  right: 0;
   height: 2px;
-  background: var(--violet);
-  transition: right 0.2s ease;
+  background: var(--primary-bright);
+  transform: scaleX(0);
+  transition: transform 0.25s ease;
 }
 
-.desktop-nav a:hover::after {
-  right: 0;
+.nav-link:hover {
+  color: #ffffff;
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .header-cta {
-  justify-self: end;
-  padding: 11px 18px;
-  border: 1px solid var(--ink);
-  border-radius: 999px;
+  min-height: 42px;
+  padding: 0 20px;
   font-size: 0.84rem;
-  font-weight: 750;
-  transition: all 0.2s ease;
-  color: var(--ink);
 }
 
-.header-cta:hover {
-  color: white;
-  background: var(--ink);
-  transform: translateY(-1px);
-}
-
-.menu-button {
+.mobile-menu-btn {
   display: none;
-  justify-self: end;
-  width: 42px;
-  height: 42px;
-  border: 0;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: var(--ink);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.06);
   cursor: pointer;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }
 
-.menu-button span {
-  display: block;
+.mobile-menu-btn span {
   width: 18px;
   height: 2px;
-  margin: 5px auto;
-  background: white;
+  background: #ffffff;
   border-radius: 1px;
 }
 
-@media (max-width: 1120px) {
-  .site-header {
-    grid-template-columns: 1fr auto;
-  }
-  .desktop-nav, .header-cta {
+@media (max-width: 960px) {
+  .desktop-nav {
     display: none;
   }
-  .menu-button {
-    display: block;
+  .mobile-menu-btn {
+    display: flex;
   }
 }
 
-@media (max-width: 760px) {
-  .site-header {
-    height: 70px;
-    padding-inline: 16px;
+@media (max-width: 640px) {
+  .header-cta {
+    display: none;
   }
-  .brand-mark {
-    width: 37px;
-    height: 37px;
+  .brand-tagline {
+    display: none;
   }
 }
 </style>
