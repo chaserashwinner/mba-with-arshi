@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useScrollAnimation } from '~/composables/useScrollAnimation';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { useScrollAnimation, MOTION_MEDIA } from '~/composables/useScrollAnimation';
 
 const sectionRef = ref<HTMLElement | null>(null);
 const textRef = ref<HTMLElement | null>(null);
 
 const { initGSAP, isReducedMotion } = useScrollAnimation();
+let gsapCtx: { revert: () => void } | null = null;
 
 onMounted(async () => {
   if (isReducedMotion()) return;
@@ -13,42 +14,50 @@ onMounted(async () => {
   const { gsap, ScrollTrigger } = await initGSAP();
   if (!gsap || !ScrollTrigger || !sectionRef.value || !textRef.value) return;
 
-  gsap.fromTo(
-    textRef.value,
-    { scale: 0.9, opacity: 0.3, y: 50 },
-    {
-      scale: 1,
-      opacity: 1,
-      y: -20,
-      scrollTrigger: {
-        trigger: sectionRef.value,
-        start: 'top bottom-=50',
-        end: 'bottom top+=50',
-        scrub: 1,
-      },
-    }
-  );
+  gsapCtx = gsap.context(() => {
+    const mm = gsap.matchMedia();
+    // Subtle depth: the statement drifts slightly slower than the page.
+    mm.add(MOTION_MEDIA.tablet, () => {
+      gsap.fromTo(
+        textRef.value,
+        { scale: 0.96, y: 40 },
+        {
+          scale: 1,
+          y: -30,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: sectionRef.value,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 0.8,
+          },
+        },
+      );
+    });
+  }, sectionRef.value);
 });
+
+onBeforeUnmount(() => gsapCtx?.revert());
 </script>
 
 <template>
-  <section ref="sectionRef" class="visual-break-section">
+  <section ref="sectionRef" class="visual-break-section" aria-labelledby="principle-heading">
     <div class="glow-backdrop" aria-hidden="true"></div>
 
     <div class="break-container">
       <div ref="textRef" class="quote-text-block">
-        <span class="eyebrow">
+        <span v-reveal="'fade'" class="eyebrow">
           <span class="line"></span>
           <span>THE ADMISSION PRINCIPLE</span>
         </span>
 
-        <h2>
+        <h2 id="principle-heading" v-split-words="{ delay: 100 }">
           THE RIGHT MBA <br />
           STARTS WITH THE <br />
           <em class="serif-italic">RIGHT QUESTIONS.</em>
         </h2>
 
-        <p class="break-sub">
+        <p v-reveal="{ variant: 'up', delay: 450 }" class="break-sub">
           Not marketing hype. Not unverified rank lists. Pure profile clarity.
         </p>
       </div>
@@ -59,7 +68,7 @@ onMounted(async () => {
 <style scoped>
 .visual-break-section {
   position: relative;
-  padding: 140px max(5vw, 24px);
+  padding: clamp(100px, 14vw, 160px) max(5vw, 20px);
   background: var(--bg-dark);
   color: var(--ink-dark);
   text-align: center;
@@ -67,18 +76,18 @@ onMounted(async () => {
   isolation: isolate;
 }
 
+/* Soft radial glow — gradient only, no blur filter */
 .glow-backdrop {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 600px;
-  height: 600px;
+  width: min(900px, 140vw);
+  aspect-ratio: 1;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(124, 58, 237, 0.22) 0%, rgba(219, 46, 207, 0.1) 45%, transparent 70%);
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.22) 0%, rgba(124, 58, 237, 0.06) 40%, transparent 65%);
   pointer-events: none;
   z-index: 1;
-  filter: blur(60px);
 }
 
 .break-container {
@@ -92,7 +101,6 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  will-change: transform, opacity;
 }
 
 .quote-text-block .eyebrow {
@@ -101,23 +109,22 @@ onMounted(async () => {
 
 h2 {
   margin: 0;
-  font-size: clamp(2.8rem, 6.5vw, 5.8rem);
-  line-height: 0.94;
+  font-size: clamp(2.3rem, 6.5vw, 5.8rem);
+  line-height: 0.98;
   letter-spacing: -0.05em;
   font-weight: 900;
   color: #ffffff;
 }
 
+h2 .serif-italic {
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
 .break-sub {
-  margin-top: 30px;
+  margin: 30px 0 0;
   color: var(--ink-dark-muted);
   font-size: clamp(1rem, 1.8vw, 1.25rem);
   max-width: 520px;
-}
-
-@media (max-width: 640px) {
-  .visual-break-section {
-    padding: 90px 20px;
-  }
 }
 </style>

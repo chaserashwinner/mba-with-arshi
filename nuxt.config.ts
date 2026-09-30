@@ -11,6 +11,7 @@ export default defineNuxtConfig({
 
   app: {
     head: {
+      htmlAttrs: { lang: "en" },
       title: "MBA With Arshi — Find the Right MBA College",
       meta: [
         { charset: "utf-8" },
@@ -21,7 +22,9 @@ export default defineNuxtConfig({
         },
         { property: "og:title", content: "MBA With Arshi — Find the Right MBA College" },
         { property: "og:description", content: "Practical MBA college shortlisting, entrance exam guidance, reviews and counselling with Arshi Khan." },
-        { property: "og:type", content: "website" }
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary" },
+        { name: "theme-color", content: "#07050d" }
       ],
       link: [
         {
@@ -35,7 +38,7 @@ export default defineNuxtConfig({
         },
         {
           rel: "stylesheet",
-          href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;1,400;1,600&display=swap",
+          href: "https://fonts.googleapis.com/css2?family=Inter:wght@300..900&family=Playfair+Display:ital,wght@0,600;1,400;1,500;1,600&display=swap",
         },
       ],
     },

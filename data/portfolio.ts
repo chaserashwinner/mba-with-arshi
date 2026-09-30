@@ -17,6 +17,7 @@ export interface PersonalInfo {
   email: string;
   youtubeChannel: string;
   youtubeUrl: string;
+  instagramUrl: string;
 }
 
 export interface DecisionShortcut {
@@ -87,6 +88,8 @@ export const PORTFOLIO_DATA: {
     email: "hello@mbawitharshi.in",
     youtubeChannel: "MBA WITH ARSHI",
     youtubeUrl: "https://www.youtube.com/@mbawitharshikhan",
+    // Same handle as config/socialLinks.ts (COURSE_SOCIAL_LINKS.mba.instagram)
+    instagramUrl: "https://www.instagram.com/mbawitharshikhan",
   },
   shortcuts: [
     {

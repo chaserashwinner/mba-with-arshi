@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import ScrollProgress from '~/components/animations/ScrollProgress.vue';
+import CursorFollower from '~/components/animations/CursorFollower.vue';
 import SiteHeader from '~/components/SiteHeader.vue';
 import MobileDrawer from '~/components/MobileDrawer.vue';
 
@@ -27,15 +28,20 @@ function closeDrawer() {
 
 <template>
   <div class="mba-redesign-app">
-    <!-- Subtle Scroll Progress Bar Indicator -->
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <!-- Thin scroll progress indicator -->
     <ScrollProgress />
 
-    <!-- Site Fixed Navigation Header -->
-    <SiteHeader @toggle-menu="toggleDrawer" />
-    <MobileDrawer :isOpen="isDrawerOpen" @close="closeDrawer" />
+    <!-- Desktop-only cursor companion (not rendered on touch / reduced motion) -->
+    <CursorFollower />
 
-    <main id="main-content">
-      <!-- 01: Hero Section (Entrance animation + Parallax Scroll-away) -->
+    <!-- Site Fixed Navigation Header -->
+    <SiteHeader :menu-open="isDrawerOpen" @toggle-menu="toggleDrawer" />
+    <MobileDrawer :is-open="isDrawerOpen" @close="closeDrawer" />
+
+    <main id="main-content" tabindex="-1">
+      <!-- 01: Hero Section (staggered entrance + subtle scroll-away) -->
       <HeroSection />
 
       <!-- 02: Pinned Scroll-Driven Storytelling Section -->
@@ -47,7 +53,7 @@ function closeDrawer() {
       <!-- 04: Horizontal Scroll Entrance Exams & Video Reviews -->
       <ExamsHorizontalSection />
 
-      <!-- 05: 4-Step Admission Guidance Roadmap -->
+      <!-- 05: 4-Step Admission Guidance Timeline -->
       <GuidanceProcessSection />
 
       <!-- 06: Editorial Visual Break Section -->
@@ -60,7 +66,7 @@ function closeDrawer() {
       <CounsellingCTASection />
     </main>
 
-    <!-- 09: Minimal Site Footer -->
+    <!-- 09: Site Footer -->
     <SiteFooter />
   </div>
 </template>
@@ -72,10 +78,14 @@ function closeDrawer() {
   flex-direction: column;
   background: var(--bg-dark);
   color: var(--ink-light);
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 main {
   flex: 1;
+}
+
+main:focus {
+  outline: none;
 }
 </style>

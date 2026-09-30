@@ -25,20 +25,45 @@
   --primary: #7c3aed;
   --primary-hover: #6d28d9;
   --primary-bright: #8b5cf6;
+  --primary-soft: #a78bfa;
   --primary-light: #eef2ff;
   --accent-acid: #d9ff57;
   --accent-magenta: #db2ecf;
-  
+
   --radius-sm: 8px;
   --radius-md: 16px;
   --radius-lg: 24px;
   --radius-xl: 36px;
   --radius-full: 9999px;
-  
+
   --shadow-sm: 0 4px 12px rgba(18, 14, 28, 0.04);
   --shadow-md: 0 12px 32px rgba(18, 14, 28, 0.08);
   --shadow-lg: 0 24px 64px rgba(18, 14, 28, 0.12);
   --shadow-dark: 0 24px 70px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 18px 40px -12px rgba(124, 58, 237, 0.45);
+
+  /* ───────── Motion language ─────────
+     fast  → micro-interactions (hover, focus, icons)
+     med   → cards, buttons, menus
+     slow  → section / content entrances            */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 200ms;
+  --dur-med: 380ms;
+  --dur-slow: 720ms;
+  --stagger: 80ms;
+  --reveal-distance: 28px;
+
+  --header-h: 76px;
+}
+
+@media (max-width: 640px) {
+  :root {
+    --dur-slow: 560ms;
+    --stagger: 60ms;
+    --reveal-distance: 18px;
+    --header-h: 68px;
+  }
 }
 
 * {
@@ -48,17 +73,23 @@
 html {
   scroll-behavior: smooth;
   color-scheme: dark light;
+  scroll-padding-top: calc(var(--header-h) + 8px);
 }
 
 body {
   margin: 0;
   color: var(--ink-light);
-  background: var(--bg-light);
+  background: var(--bg-dark);
   font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 16px;
   line-height: 1.5;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body.is-scroll-locked {
+  overflow: hidden;
 }
 
 a {
@@ -73,6 +104,54 @@ button, select, input, textarea {
 img {
   max-width: 100%;
   display: block;
+}
+
+::selection {
+  background: rgba(139, 92, 246, 0.35);
+  color: inherit;
+}
+
+/* Visible, consistent keyboard focus */
+:focus-visible {
+  outline: 2px solid var(--primary-soft);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.button:focus-visible {
+  outline-offset: 4px;
+  border-radius: var(--radius-full);
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 200;
+  padding: 10px 18px;
+  border-radius: var(--radius-full);
+  background: var(--accent-acid);
+  color: var(--ink-light);
+  font-weight: 800;
+  font-size: 0.85rem;
+  transform: translateY(-160%);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* Custom Scrollbar */
@@ -95,6 +174,7 @@ img {
   font-family: 'Playfair Display', Georgia, "Times New Roman", serif;
   font-style: italic;
   font-weight: 500;
+  letter-spacing: -0.02em;
   color: var(--primary-bright);
 }
 
@@ -115,10 +195,12 @@ img {
   height: 2px;
   background: currentColor;
   display: inline-block;
+  transform-origin: left center;
 }
 
-/* Base Buttons */
+/* ───────── Buttons ───────── */
 .button {
+  position: relative;
   min-height: 52px;
   padding: 0 28px;
   display: inline-flex;
@@ -130,30 +212,72 @@ img {
   font-size: 0.9rem;
   font-weight: 700;
   cursor: pointer;
-  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), 
-              box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1), 
-              background-color 0.25s ease, 
-              border-color 0.25s ease,
-              color 0.25s ease;
-}
-
-.button:hover {
-  transform: translateY(-2px);
+  isolation: isolate;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--dur-med) var(--ease-out),
+              box-shadow var(--dur-med) var(--ease-out),
+              background-color var(--dur-fast) ease,
+              border-color var(--dur-fast) ease,
+              color var(--dur-fast) ease,
+              translate 450ms var(--ease-out);
 }
 
 .button:active {
-  transform: translateY(0);
+  transform: scale(0.98);
+}
+
+/* Arrow / icon nudge on hover */
+.btn-icon {
+  width: 1.05em;
+  height: 1.05em;
+  flex: none;
+  transition: transform var(--dur-med) var(--ease-out);
+}
+
+.button:hover .btn-icon,
+.button:focus-visible .btn-icon,
+.link-arrow:hover .btn-icon,
+.link-arrow:focus-visible .btn-icon {
+  transform: translateX(4px);
+}
+
+.button:hover .btn-icon--diag,
+.button:focus-visible .btn-icon--diag,
+.link-arrow:hover .btn-icon--diag,
+.link-arrow:focus-visible .btn-icon--diag {
+  transform: translate(3px, -3px);
+}
+
+.button:hover .btn-icon--static,
+.button:focus-visible .btn-icon--static {
+  transform: none;
 }
 
 .button-primary {
   color: #ffffff;
   background: var(--primary);
-  box-shadow: 0 12px 28px rgba(124, 58, 237, 0.35);
+  box-shadow: 0 12px 28px -8px rgba(124, 58, 237, 0.55);
+}
+
+/* Soft sheen that sweeps across on hover (transform-only) */
+.button-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(110deg, transparent 20%, rgba(255, 255, 255, 0.22) 45%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 700ms var(--ease-out);
 }
 
 .button-primary:hover {
   background: var(--primary-hover);
-  box-shadow: 0 16px 36px rgba(124, 58, 237, 0.48);
+  box-shadow: 0 18px 40px -10px rgba(124, 58, 237, 0.7);
+}
+
+.button-primary:hover::before {
+  transform: translateX(120%);
 }
 
 .button-secondary {
@@ -171,11 +295,10 @@ img {
   border-color: rgba(255, 255, 255, 0.18);
   background: rgba(255, 255, 255, 0.05);
   color: #ffffff;
-  backdrop-filter: blur(12px);
 }
 
 .button-ghost-dark:hover {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.35);
 }
 
@@ -190,13 +313,138 @@ img {
   box-shadow: 0 12px 28px rgba(217, 255, 87, 0.35);
 }
 
-/* Reduced Motion Support */
+/* Magnetic CTA (v-magnetic): uses the independent `translate` property,
+   so it composes with the button's own hover/active `transform`.      */
+[data-magnetic] {
+  translate: var(--mx, 0px) var(--my, 0px);
+}
+
+/* ───────── Link underline micro-interaction ───────── */
+.link-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform var(--dur-med) var(--ease-out);
+}
+
+.link-underline:hover::after,
+.link-underline:focus-visible::after,
+.link-underline[aria-current]::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ───────── Scroll reveal system (v-reveal) ─────────
+   Only transform + opacity (and clip-path for image masks).
+   The hidden state is applied by JS, so content is never hidden if
+   scripts fail. `html` prefix + doubled class give these rules priority
+   over component styles while an entrance plays; the directive removes
+   the classes afterwards so each component's own hover transitions apply. */
+html .reveal.reveal,
+html .reveal-group > .reveal-item.reveal-item {
+  opacity: 0;
+  transition:
+    opacity var(--dur-slow) var(--ease-out) var(--reveal-delay, 0ms),
+    transform var(--dur-slow) var(--ease-out) var(--reveal-delay, 0ms),
+    clip-path calc(var(--dur-slow) * 1.4) var(--ease-in-out) var(--reveal-delay, 0ms);
+}
+
+html .reveal--up.reveal--up,
+html .reveal-group--up > .reveal-item.reveal-item { transform: translate3d(0, var(--reveal-distance), 0); }
+html .reveal--left.reveal--left,
+html .reveal-group--left > .reveal-item.reveal-item { transform: translate3d(calc(var(--reveal-distance) * -1), 0, 0); }
+html .reveal--right.reveal--right,
+html .reveal-group--right > .reveal-item.reveal-item { transform: translate3d(var(--reveal-distance), 0, 0); }
+html .reveal--scale.reveal--scale,
+html .reveal-group--scale > .reveal-item.reveal-item { transform: scale(0.97) translate3d(0, 12px, 0); }
+html .reveal--fade.reveal--fade,
+html .reveal-group--fade > .reveal-item.reveal-item { transform: none; }
+
+html .reveal--mask.reveal--mask {
+  opacity: 1;
+  clip-path: inset(10% 8% 10% 8% round var(--radius-xl));
+}
+
+html .reveal.is-revealed,
+html .reveal-group.is-revealed > .reveal-item.reveal-item {
+  opacity: 1;
+  transform: none;
+}
+
+html .reveal--mask.is-revealed {
+  clip-path: inset(0 0 0 0 round var(--radius-xl));
+}
+
+/* Split-word heading reveal (v-split-words) */
+.split-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding: 0 0.04em 0.12em;
+  margin: 0 -0.04em -0.12em;
+}
+
+.split-word__inner {
+  display: inline-block;
+  transform: translate3d(0, 110%, 0);
+  transition: transform calc(var(--dur-slow) * 1.05) var(--ease-out) var(--word-delay, 0ms);
+}
+
+.split-words.is-revealed .split-word__inner {
+  transform: none;
+}
+
+/* Reusable hover-lift card (transform only — never shifts layout) */
+.hover-card {
+  transition:
+    transform var(--dur-med) var(--ease-out),
+    box-shadow var(--dur-med) var(--ease-out),
+    border-color var(--dur-med) ease,
+    background-color var(--dur-med) ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hover-card:hover {
+    transform: translate3d(0, -6px, 0);
+  }
+}
+
+/* ───────── Reduced motion ───────── */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
   *, *::before, *::after {
-    animation: none !important;
-    transition: none !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+  html .reveal,
+  html .reveal-group > .reveal-item,
+  .split-word__inner {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+  [data-magnetic] {
+    translate: none !important;
   }
 }

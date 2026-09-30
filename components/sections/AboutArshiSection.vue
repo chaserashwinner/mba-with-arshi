@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ArrowRightIcon, PlayIcon } from '@heroicons/vue/20/solid';
 import { PORTFOLIO_DATA } from '~/data/portfolio';
-import { useScrollAnimation } from '~/composables/useScrollAnimation';
+import { useScrollAnimation, MOTION_MEDIA } from '~/composables/useScrollAnimation';
 
 const personal = PORTFOLIO_DATA.personal;
 
 const sectionRef = ref<HTMLElement | null>(null);
 const imageRef = ref<HTMLElement | null>(null);
-const contentRef = ref<HTMLElement | null>(null);
 
 const { initGSAP, isReducedMotion } = useScrollAnimation();
+let gsapCtx: { revert: () => void } | null = null;
 
 onMounted(async () => {
   if (isReducedMotion()) return;
@@ -17,61 +18,58 @@ onMounted(async () => {
   const { gsap, ScrollTrigger } = await initGSAP();
   if (!gsap || !ScrollTrigger || !sectionRef.value || !imageRef.value) return;
 
-  // Image scale down reveal (1.08 -> 1)
-  gsap.fromTo(
-    imageRef.value,
-    { scale: 1.12 },
-    {
-      scale: 1,
-      duration: 1.2,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: sectionRef.value,
-        start: 'top bottom-=100',
-        toggleActions: 'play none none reverse',
-      },
-    }
-  );
-
-  // Content fade & stagger
-  if (contentRef.value) {
-    gsap.fromTo(
-      contentRef.value.children,
-      { opacity: 0, y: 30 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: contentRef.value,
-          start: 'top bottom-=80',
+  gsapCtx = gsap.context(() => {
+    const mm = gsap.matchMedia();
+    // Slight parallax inside the (masked) portrait frame.
+    mm.add(MOTION_MEDIA.tablet, () => {
+      gsap.fromTo(
+        imageRef.value,
+        { yPercent: -4, scale: 1.1 },
+        {
+          yPercent: 4,
+          scale: 1.1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: sectionRef.value,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 0.6,
+          },
         },
-      }
-    );
-  }
+      );
+    });
+  }, sectionRef.value);
 });
+
+onBeforeUnmount(() => gsapCtx?.revert());
 </script>
 
 <template>
-  <section ref="sectionRef" class="about-arshi-section" id="about">
+  <section ref="sectionRef" class="about-arshi-section" id="about" aria-labelledby="about-heading">
     <div class="about-container">
       <div class="about-grid">
-        <!-- Portrait Image Frame -->
+        <!-- Portrait Image Frame (clip-path mask reveal) -->
         <div class="portrait-frame">
-          <div class="image-wrapper">
-            <img 
-              ref="imageRef"
-              src="/mentors/arshi-800.png" 
-              alt="Arshi Khan — Senior MBA Counselor" 
-              class="portrait-img"
-            />
-            <div class="portrait-overlay"></div>
+          <div v-reveal="'mask'" class="image-wrapper" data-cursor="Arshi">
+            <picture>
+              <source srcset="/mentors/arshi-800.avif" type="image/avif" />
+              <source srcset="/mentors/arshi-800.webp" type="image/webp" />
+              <img
+                ref="imageRef"
+                src="/mentors/arshi-800.png"
+                alt="Arshi Khan — Senior MBA Counselor"
+                class="portrait-img"
+                width="800"
+                height="450"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+            <div class="portrait-overlay" aria-hidden="true"></div>
           </div>
 
-          <div class="portrait-badge">
-            <span class="badge-dot"></span>
+          <div v-reveal="{ variant: 'up', delay: 500 }" class="portrait-badge">
+            <span class="badge-dot" aria-hidden="true"></span>
             <div>
               <strong>ARSHI KHAN</strong>
               <small>10+ Yrs Counselling Experience</small>
@@ -80,13 +78,13 @@ onMounted(async () => {
         </div>
 
         <!-- Editorial Content Column -->
-        <div ref="contentRef" class="content-col">
+        <div v-reveal="{ stagger: 90 }" class="content-col">
           <div class="eyebrow">
             <span class="line"></span>
             <span>06 — ABOUT THE COUNSELOR</span>
           </div>
 
-          <h2>
+          <h2 id="about-heading">
             Honest MBA guidance, <br />
             <em class="serif-italic">backed by facts.</em>
           </h2>
@@ -99,33 +97,35 @@ onMounted(async () => {
             Whether you are preparing for CAT, XAT, CMAT, SNAP or MAH CET, get transparent advice on actual tuition fees, hostel expenses, average salary packages, and campus reality.
           </p>
 
-          <!-- Key Metrics Pills -->
-          <div class="stats-row">
-            <div class="stat-pill">
+          <!-- Key Metrics -->
+          <ul class="stats-row">
+            <li class="stat-pill">
               <strong>10+ Yrs</strong>
               <small>COUNSELLING EXP.</small>
-            </div>
-            <div class="stat-pill">
+            </li>
+            <li class="stat-pill">
               <strong>100%</strong>
               <small>FACT-BASED REVIEWS</small>
-            </div>
-            <div class="stat-pill">
+            </li>
+            <li class="stat-pill">
               <strong>8+</strong>
               <small>TARGET CITIES</small>
-            </div>
-          </div>
+            </li>
+          </ul>
 
           <div class="action-row">
-            <a 
-              :href="personal.youtubeUrl" 
-              target="_blank" 
-              rel="noreferrer" 
+            <a
+              :href="personal.youtubeUrl"
+              target="_blank"
+              rel="noreferrer"
               class="button button-secondary"
             >
-              <span>▶</span> Watch YouTube Channel
+              <PlayIcon class="btn-icon btn-icon--static yt-icon" aria-hidden="true" />
+              Watch YouTube Channel
             </a>
-            <a href="#counselling" class="button button-primary">
-              Book 1:1 Guidance Session →
+            <a v-magnetic href="#counselling" class="button button-primary">
+              Book 1:1 Guidance Session
+              <ArrowRightIcon class="btn-icon" aria-hidden="true" />
             </a>
           </div>
         </div>
@@ -136,7 +136,7 @@ onMounted(async () => {
 
 <style scoped>
 .about-arshi-section {
-  padding: 110px max(5vw, 24px);
+  padding: clamp(80px, 11vw, 120px) max(5vw, 20px);
   background: var(--surface-light);
   color: var(--ink-light);
   overflow: hidden;
@@ -158,6 +158,7 @@ onMounted(async () => {
 .portrait-frame {
   position: relative;
   width: 100%;
+  max-width: 560px;
 }
 
 .image-wrapper {
@@ -167,7 +168,7 @@ onMounted(async () => {
   overflow: hidden;
   border: 1px solid var(--border-light);
   box-shadow: var(--shadow-lg);
-  background: linear-gradient(135deg, #180d32, #3b1675);
+  background: #000;
 }
 
 .portrait-img {
@@ -176,13 +177,16 @@ onMounted(async () => {
   object-fit: cover;
   object-position: center 20%;
   filter: contrast(1.04);
-  will-change: transform;
+  transform: scale(1.1);
+  transition: filter 600ms ease;
 }
 
 .portrait-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 60%, rgba(18, 14, 28, 0.4) 100%);
+  background:
+    linear-gradient(180deg, transparent 55%, rgba(18, 14, 28, 0.45) 100%),
+    radial-gradient(100% 60% at 50% 0%, rgba(124, 58, 237, 0.2), transparent 60%);
 }
 
 .portrait-badge {
@@ -195,8 +199,7 @@ onMounted(async () => {
   gap: 10px;
   padding: 10px 18px;
   border-radius: var(--radius-lg);
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.96);
   box-shadow: var(--shadow-md);
 }
 
@@ -205,6 +208,7 @@ onMounted(async () => {
   height: 10px;
   border-radius: 50%;
   background: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
 }
 
 .portrait-badge strong {
@@ -224,8 +228,9 @@ onMounted(async () => {
 
 /* Content Column */
 .content-col h2 {
+  text-wrap: balance;
   margin: 14px 0 20px;
-  font-size: clamp(2.4rem, 4.5vw, 4rem);
+  font-size: clamp(2.2rem, 4.5vw, 4rem);
   line-height: 1.02;
   letter-spacing: -0.04em;
   font-weight: 850;
@@ -236,41 +241,74 @@ onMounted(async () => {
   color: var(--ink-light);
   font-size: clamp(1.05rem, 1.8vw, 1.2rem);
   line-height: 1.65;
-  margin-bottom: 16px;
+  margin: 0 0 16px;
 }
 
 .sub-bio {
   color: var(--ink-light-muted);
   font-size: 0.98rem;
   line-height: 1.65;
-  margin-bottom: 28px;
+  margin: 0 0 28px;
 }
 
 .stats-row {
+  list-style: none;
+  padding: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-  margin-bottom: 36px;
+  gap: 14px;
+  margin: 0 0 36px;
 }
 
 .stat-pill {
-  padding: 14px 20px;
+  position: relative;
+  padding: 16px 22px;
   border-radius: var(--radius-md);
   background: var(--bg-light);
   border: 1px solid var(--border-light);
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  transition:
+    transform var(--dur-med) var(--ease-out),
+    border-color var(--dur-med) ease,
+    box-shadow var(--dur-med) var(--ease-out);
+}
+
+.stat-pill::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--primary);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur-med) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .stat-pill:hover {
+    transform: translate3d(0, -4px, 0);
+    border-color: rgba(139, 92, 246, 0.35);
+    box-shadow: var(--shadow-md);
+  }
+  .stat-pill:hover::after {
+    transform: scaleX(1);
+  }
 }
 
 .stat-pill strong {
-  font-size: 1.35rem;
+  font-size: 1.4rem;
   font-weight: 900;
   color: var(--primary);
   line-height: 1;
+  letter-spacing: -0.02em;
 }
 
 .stat-pill small {
-  margin-top: 4px;
+  margin-top: 6px;
   font-size: 0.62rem;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -283,9 +321,35 @@ onMounted(async () => {
   gap: 14px;
 }
 
+.yt-icon {
+  color: #ff0033;
+}
+
 @media (max-width: 1024px) {
   .about-grid {
     grid-template-columns: 1fr;
+  }
+  .portrait-frame {
+    max-width: 480px;
+  }
+}
+
+@media (max-width: 640px) {
+  .image-wrapper {
+    aspect-ratio: 1;
+  }
+  .stat-pill {
+    flex: 1 1 calc(50% - 14px);
+    padding: 14px 16px;
+  }
+  .action-row .button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portrait-img {
+    transform: none;
   }
 }
 </style>

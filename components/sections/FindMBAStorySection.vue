@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useScrollAnimation } from '~/composables/useScrollAnimation';
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
+import { ArrowRightIcon, CheckIcon } from '@heroicons/vue/20/solid';
+import { useScrollAnimation, MOTION_MEDIA } from '~/composables/useScrollAnimation';
 
 const sectionRef = ref<HTMLElement | null>(null);
 const pinContainerRef = ref<HTMLElement | null>(null);
@@ -49,7 +50,22 @@ const steps = [
   },
 ];
 
+const activeStep = computed(() => steps[currentStepIndex.value]);
+const progress = computed(() => currentStepIndex.value / (steps.length - 1));
+
 const { initGSAP, isReducedMotion } = useScrollAnimation();
+let gsapCtx: { revert: () => void } | null = null;
+let pinTrigger: { start: number; end: number } | null = null;
+
+/** Selecting a step: while pinned, scroll to that step's position so scroll and state agree. */
+function selectStep(i: number) {
+  if (pinTrigger) {
+    const span = pinTrigger.end - pinTrigger.start;
+    const target = pinTrigger.start + span * ((i + 0.5) / steps.length);
+    window.scrollTo({ top: target, behavior: isReducedMotion() ? 'auto' : 'smooth' });
+  }
+  currentStepIndex.value = i;
+}
 
 onMounted(async () => {
   if (isReducedMotion()) return;
@@ -59,93 +75,113 @@ onMounted(async () => {
 
   const totalSteps = steps.length;
 
-  ScrollTrigger.create({
-    trigger: sectionRef.value,
-    pin: pinContainerRef.value,
-    start: 'top top',
-    end: `+=${totalSteps * 80}%`,
-    scrub: 0.5,
-    onUpdate: (self) => {
-      const idx = Math.min(
-        totalSteps - 1,
-        Math.floor(self.progress * totalSteps)
-      );
-      currentStepIndex.value = idx;
-    },
-  });
+  gsapCtx = gsap.context(() => {
+    const mm = gsap.matchMedia();
+    // Scroll-pinned storytelling only where there's room for it (≥900px).
+    mm.add(MOTION_MEDIA.tablet, () => {
+      const st = ScrollTrigger.create({
+        trigger: sectionRef.value,
+        pin: pinContainerRef.value,
+        start: 'top top',
+        end: `+=${totalSteps * 70}%`,
+        onUpdate: (self) => {
+          const idx = Math.min(totalSteps - 1, Math.floor(self.progress * totalSteps));
+          if (idx !== currentStepIndex.value) currentStepIndex.value = idx;
+        },
+      });
+      pinTrigger = st;
+      return () => {
+        pinTrigger = null;
+      };
+    });
+  }, sectionRef.value);
 });
+
+onBeforeUnmount(() => gsapCtx?.revert());
 </script>
 
 <template>
-  <section 
-    ref="sectionRef" 
-    class="find-mba-story-section" 
+  <section
+    ref="sectionRef"
+    class="find-mba-story-section"
     id="find-mba-story"
+    aria-labelledby="story-heading"
   >
     <div ref="pinContainerRef" class="pinned-stage">
       <div class="story-container">
         <!-- Story Top Header -->
-        <div class="story-header">
+        <div v-reveal="{ stagger: true }" class="story-header">
           <div class="eyebrow">
             <span class="line"></span>
             <span>02 — SCROLL STORYTELLING</span>
           </div>
-          <h2>Finding the right MBA is a process.</h2>
+          <h2 id="story-heading">Finding the right MBA is a process.</h2>
         </div>
 
         <div class="story-body">
           <!-- Step Selector Sequence Column -->
-          <div class="step-sequence-col">
-            <div class="connecting-line-track">
-              <div 
-                class="connecting-line-fill"
-                :style="{ height: `${(currentStepIndex / (steps.length - 1)) * 100}%` }"
-              ></div>
+          <div v-reveal="'left'" class="step-sequence-col">
+            <div class="connecting-line-track" aria-hidden="true">
+              <div class="connecting-line-fill" :style="{ transform: `scaleY(${progress})` }"></div>
             </div>
 
-            <div class="steps-list">
-              <div 
-                v-for="(step, i) in steps" 
-                :key="step.num"
-                class="step-item"
-                :class="{ 
-                  active: i === currentStepIndex,
-                  passed: i < currentStepIndex
-                }"
-                @click="currentStepIndex = i"
-              >
-                <span class="step-dot">
-                  <span v-if="i < currentStepIndex" class="check-mark">✓</span>
-                  <span v-else>{{ step.num }}</span>
-                </span>
-                <span class="step-name">{{ step.name }}</span>
-              </div>
-            </div>
+            <ol class="steps-list" aria-label="Admission decision steps">
+              <li v-for="(step, i) in steps" :key="step.num">
+                <button
+                  type="button"
+                  class="step-item"
+                  :class="{
+                    active: i === currentStepIndex,
+                    passed: i < currentStepIndex,
+                  }"
+                  :aria-pressed="i === currentStepIndex ? 'true' : 'false'"
+                  @click="selectStep(i)"
+                >
+                  <span class="step-dot" aria-hidden="true">
+                    <Transition name="swap" mode="out-in">
+                      <CheckIcon v-if="i < currentStepIndex" key="check" class="check-mark" />
+                      <span v-else key="num">{{ step.num }}</span>
+                    </Transition>
+                  </span>
+                  <span class="step-name">{{ step.name }}</span>
+                </button>
+              </li>
+            </ol>
           </div>
 
           <!-- Dynamic Active Step Detail Card -->
-          <div class="step-card-col">
-            <div 
+          <div v-reveal="{ variant: 'scale', delay: 120 }" class="step-card-col">
+            <div
               class="active-card-shell"
-              :style="{ borderColor: steps[currentStepIndex].accent }"
+              :style="{ '--step-accent': activeStep.accent }"
+              aria-live="polite"
             >
-              <div class="card-meta">
-                <span 
-                  class="meta-badge"
-                  :style="{ background: steps[currentStepIndex].accent, color: currentStepIndex === 4 ? '#111019' : '#ffffff' }"
-                >
-                  STEP {{ steps[currentStepIndex].num }}
-                </span>
-                <span class="meta-detail">{{ steps[currentStepIndex].detail }}</span>
-              </div>
+              <div class="card-accent-glow" aria-hidden="true"></div>
+              <Transition name="step-card" mode="out-in">
+                <div :key="activeStep.num" class="card-inner">
+                  <div class="card-meta">
+                    <span
+                      class="meta-badge"
+                      :style="{ background: activeStep.accent, color: currentStepIndex === 4 ? '#111019' : '#ffffff' }"
+                    >
+                      STEP {{ activeStep.num }}
+                    </span>
+                    <span class="meta-detail">{{ activeStep.detail }}</span>
+                  </div>
 
-              <h3 class="card-title">{{ steps[currentStepIndex].title }}</h3>
-              <p class="card-desc">{{ steps[currentStepIndex].desc }}</p>
+                  <h3 class="card-title">{{ activeStep.title }}</h3>
+                  <p class="card-desc">{{ activeStep.desc }}</p>
+                </div>
+              </Transition>
 
-              <div class="card-action">
+              <div class="card-footer-row">
                 <a href="#find-colleges" class="button button-primary card-cta">
-                  Explore Matches for {{ steps[currentStepIndex].name }} →
+                  Explore Matches for {{ activeStep.name }}
+                  <ArrowRightIcon class="btn-icon" aria-hidden="true" />
                 </a>
+                <span class="step-counter" aria-hidden="true">
+                  <strong>{{ activeStep.num }}</strong> / 0{{ steps.length }}
+                </span>
               </div>
             </div>
           </div>
@@ -163,13 +199,14 @@ onMounted(async () => {
 }
 
 .pinned-stage {
-  height: 100dvh;
+  height: 100svh;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 80px max(5vw, 24px);
+  padding: calc(var(--header-h) + 8px) max(5vw, 20px) 40px;
   box-sizing: border-box;
+  background: var(--bg-light);
 }
 
 .story-container {
@@ -184,11 +221,12 @@ onMounted(async () => {
 
 .story-header h2 {
   margin: 12px 0 0;
-  font-size: clamp(2.2rem, 4.2vw, 3.8rem);
+  font-size: clamp(2.1rem, 4.2vw, 3.8rem);
   line-height: 1.05;
   letter-spacing: -0.04em;
   font-weight: 850;
   color: var(--ink-light);
+  text-wrap: balance;
 }
 
 .story-body {
@@ -201,7 +239,7 @@ onMounted(async () => {
 /* Steps Sequence List */
 .step-sequence-col {
   position: relative;
-  padding-left: 28px;
+  padding-left: 0;
 }
 
 .connecting-line-track {
@@ -211,27 +249,41 @@ onMounted(async () => {
   bottom: 14px;
   width: 2px;
   background: var(--border-light);
+  border-radius: 2px;
+  overflow: hidden;
 }
 
 .connecting-line-fill {
   width: 100%;
-  background: var(--primary);
-  transition: height 0.4s ease;
+  height: 100%;
+  background: linear-gradient(180deg, #10b981, var(--primary));
+  transform-origin: top center;
+  transition: transform 600ms var(--ease-out);
 }
 
 .steps-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 14px;
 }
 
 .step-item {
   display: flex;
   align-items: center;
   gap: 16px;
+  width: 100%;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  text-align: left;
   cursor: pointer;
-  opacity: 0.45;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  color: inherit;
+  opacity: 0.42;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity var(--dur-med) ease, transform var(--dur-med) var(--ease-out);
 }
 
 .step-item:hover {
@@ -240,7 +292,7 @@ onMounted(async () => {
 
 .step-item.active {
   opacity: 1;
-  transform: translateX(6px);
+  transform: translateX(8px);
 }
 
 .step-item.passed {
@@ -248,25 +300,38 @@ onMounted(async () => {
 }
 
 .step-dot {
+  position: relative;
+  z-index: 2;
   width: 24px;
   height: 24px;
+  flex: none;
   border-radius: 50%;
   background: var(--surface-light);
-  border: 2px solid var(--border-light);
+  border: 2px solid rgba(18, 14, 28, 0.14);
   display: grid;
   place-items: center;
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   font-weight: 900;
   color: var(--ink-light-muted);
-  z-index: 2;
-  transition: all 0.3s ease;
+  transition:
+    background-color var(--dur-med) ease,
+    border-color var(--dur-med) ease,
+    color var(--dur-med) ease,
+    box-shadow var(--dur-med) ease,
+    transform var(--dur-med) var(--ease-out);
+}
+
+.check-mark {
+  width: 14px;
+  height: 14px;
 }
 
 .step-item.active .step-dot {
   background: var(--primary);
   border-color: var(--primary);
   color: #ffffff;
-  box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.2);
+  box-shadow: 0 0 0 5px rgba(124, 58, 237, 0.18);
+  transform: scale(1.1);
 }
 
 .step-item.passed .step-dot {
@@ -276,33 +341,94 @@ onMounted(async () => {
 }
 
 .step-name {
-  font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+  font-size: clamp(1.35rem, 2.5vw, 2.2rem);
   font-weight: 900;
   letter-spacing: -0.03em;
   color: var(--ink-light);
+  transition: color var(--dur-med) ease;
 }
 
 .step-item.active .step-name {
   color: var(--primary);
 }
 
+.swap-enter-active,
+.swap-leave-active {
+  transition: opacity 180ms ease, transform 180ms var(--ease-out);
+}
+.swap-enter-from,
+.swap-leave-to {
+  opacity: 0;
+  transform: scale(0.6);
+}
+
 /* Card Column */
 .active-card-shell {
-  padding: clamp(28px, 4vw, 44px);
+  --step-accent: var(--primary);
+  position: relative;
+  overflow: hidden;
+  padding: clamp(26px, 4vw, 44px);
   border-radius: var(--radius-xl);
   background: var(--surface-light);
-  border: 2px solid var(--primary);
+  border: 1px solid var(--border-light);
   box-shadow: var(--shadow-lg);
   display: flex;
   flex-direction: column;
   gap: 18px;
-  transition: border-color 0.4s ease;
+  isolation: isolate;
+}
+
+/* Accent bar + soft glow tinted with the active step's colour */
+.active-card-shell::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 4px;
+  background: var(--step-accent);
+  transition: background-color 500ms ease;
+}
+
+.card-accent-glow {
+  position: absolute;
+  z-index: -1;
+  top: -40%;
+  right: -20%;
+  width: 70%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--step-accent), transparent 65%);
+  opacity: 0.1;
+  transition: background 500ms ease;
+}
+
+.card-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 180px;
+}
+
+.step-card-enter-active,
+.step-card-leave-active {
+  transition: opacity 280ms var(--ease-out), transform 280ms var(--ease-out);
+}
+.step-card-enter-from {
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+}
+.step-card-leave-to {
+  opacity: 0;
+  transform: translate3d(0, -10px, 0);
 }
 
 .card-meta {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
 }
 
 .meta-badge {
@@ -334,22 +460,51 @@ onMounted(async () => {
   line-height: 1.65;
 }
 
-.card-action {
-  margin-top: 10px;
+.card-footer-row {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
 }
 
 .card-cta {
   font-size: 0.86rem;
 }
 
-@media (max-width: 900px) {
+.step-counter {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--ink-light-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.step-counter strong {
+  color: var(--ink-light);
+  font-size: 1.1rem;
+}
+
+@media (max-width: 899px) {
   .pinned-stage {
     height: auto;
-    min-height: 100dvh;
-    padding-block: 60px;
+    min-height: 0;
+    padding-block: 88px;
   }
   .story-body {
     grid-template-columns: 1fr;
+  }
+  .card-inner {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-cta {
+    width: 100%;
+    white-space: normal;
+    text-align: center;
+    padding-block: 12px;
   }
 }
 </style>
