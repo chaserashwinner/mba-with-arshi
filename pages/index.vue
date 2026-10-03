@@ -9,7 +9,6 @@ import HeroSection from '~/components/sections/HeroSection.vue';
 import FindMBAStorySection from '~/components/sections/FindMBAStorySection.vue';
 import CollegeFinderSection from '~/components/sections/CollegeFinderSection.vue';
 import ExamsHorizontalSection from '~/components/sections/ExamsHorizontalSection.vue';
-import GuidanceProcessSection from '~/components/sections/GuidanceProcessSection.vue';
 import VisualBreakSection from '~/components/sections/VisualBreakSection.vue';
 import AboutArshiSection from '~/components/sections/AboutArshiSection.vue';
 import CounsellingCTASection from '~/components/sections/CounsellingCTASection.vue';
@@ -46,23 +45,20 @@ function closeDrawer() {
       <!-- 03: Interactive College Finder & Profile Shortlist Tool -->
       <CollegeFinderSection />
 
-      <!-- 04: Horizontal Scroll Entrance Exams & Video Reviews -->
+      <!-- 04: STUDENT KHABRI & MBA With Arshi Animated Lines & Video Reviews -->
       <ExamsHorizontalSection />
 
-      <!-- 05: 4-Step Admission Guidance Timeline -->
-      <GuidanceProcessSection />
-
-      <!-- 06: Editorial Visual Break Section -->
+      <!-- 05: Editorial Visual Break Section -->
       <VisualBreakSection />
 
-      <!-- 07: Editorial About Arshi Khan Profile Section -->
+      <!-- 06: Editorial About Arshi Khan Profile Section -->
       <AboutArshiSection />
 
-      <!-- 08: 1:1 Counselling CTA & Request Booking Form -->
+      <!-- 07: 1:1 Counselling CTA & Request Booking Form -->
       <CounsellingCTASection />
     </main>
 
-    <!-- 09: Site Footer -->
+    <!-- 08: Site Footer -->
     <SiteFooter />
   </div>
 </template>

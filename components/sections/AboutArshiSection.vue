@@ -81,7 +81,7 @@ onBeforeUnmount(() => gsapCtx?.revert());
         <div v-reveal="{ stagger: 90 }" class="content-col">
           <div class="eyebrow">
             <span class="line"></span>
-            <span>06 — ABOUT THE COUNSELOR</span>
+            <span>05 — ABOUT THE COUNSELOR</span>
           </div>
 
           <h2 id="about-heading">

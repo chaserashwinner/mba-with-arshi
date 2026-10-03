@@ -54,20 +54,11 @@ export interface VideoGuide {
   isFeatured?: boolean;
 }
 
-export interface RoadmapStep {
-  step: string;
-  tag: string;
-  title: string;
-  description: string;
-  link: string;
-}
-
 export const PORTFOLIO_DATA: {
   personal: PersonalInfo;
   shortcuts: DecisionShortcut[];
   colleges: CollegeOption[];
   videos: VideoGuide[];
-  roadmap: RoadmapStep[];
 } = {
   personal: {
     name: "Arshi Khan",
@@ -268,36 +259,13 @@ export const PORTFOLIO_DATA: {
     },
     {
       id: "v4",
-      title: "College options for 60–80 percentile",
-      category: "exam",
-      categoryLabel: "CMAT & EXAMS",
-      thumbnail: "https://i.ytimg.com/vi/SUPsROCtLhw/hqdefault.jpg",
-      shortDesc: "Build a realistic application list after your score.",
-      videoUrl: "https://www.youtube.com/watch?v=SUPsROCtLhw",
+      title: "MBA College Selection & Cutoff Strategy",
+      category: "guidance",
+      categoryLabel: "MBA ADMISSIONS",
+      thumbnail: "https://i.ytimg.com/vi/bywekjVGPOw/hqdefault.jpg",
+      shortDesc: "Essential steps to analyze cutoffs, ROI, and profile fit before applying.",
+      videoUrl: "https://www.youtube.com/watch?v=bywekjVGPOw",
       isFeatured: true,
-    },
-  ],
-  roadmap: [
-    {
-      step: "01",
-      tag: "PLAN",
-      title: "Choose your exams",
-      description: "CAT, XAT, CMAT, NMAT or MAH CET? Select entrance exams aligned with your target colleges.",
-      link: "#videos",
-    },
-    {
-      step: "02",
-      tag: "SHORTLIST",
-      title: "Build your college list",
-      description: "Balance dream, target and safe choices based on percentile, budget, and location preference.",
-      link: "#find-colleges",
-    },
-    {
-      step: "03",
-      tag: "DECIDE",
-      title: "Compare final offers",
-      description: "Check actual fees, ROI, campus placement records, and role outcomes before paying acceptance fees.",
-      link: "#counselling",
     },
   ],
 };

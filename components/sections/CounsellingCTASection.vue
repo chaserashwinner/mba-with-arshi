@@ -72,7 +72,7 @@ onBeforeUnmount(() => clearTimeout(copiedTimer));
         <div v-reveal="{ stagger: 90, delay: 150 }" class="cta-copy-col">
           <div class="eyebrow">
             <span class="line"></span>
-            <span>07 — 1:1 COUNSELLING SESSION</span>
+            <span>06 — 1:1 COUNSELLING SESSION</span>
           </div>
 
           <h2 id="counselling-heading">

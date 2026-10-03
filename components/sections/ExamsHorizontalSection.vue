@@ -1,99 +1,17 @@
 <script setup lang="ts">
-import { ref, watch, nextTick, onMounted, onBeforeUnmount } from 'vue';
+import { ref, watch, nextTick, onBeforeUnmount } from 'vue';
 import { PlayIcon, XMarkIcon, ArrowUpRightIcon } from '@heroicons/vue/20/solid';
 import { PORTFOLIO_DATA } from '~/data/portfolio';
-import { useScrollAnimation, MOTION_MEDIA } from '~/composables/useScrollAnimation';
 
 const videos = PORTFOLIO_DATA.videos;
 const personal = PORTFOLIO_DATA.personal;
 const selectedVideoUrl = ref<string | null>(null);
 const selectedVideoTitle = ref('');
 
-const examItems = [
-  {
-    name: 'CAT',
-    full: 'Common Admission Test',
-    target: 'IIMs, FMS, SPJIMR, MDI',
-    badge: 'NATIONAL TIER-1',
-    desc: 'The benchmark national entrance test taken by ~3 lakh aspirants annually.',
-  },
-  {
-    name: 'XAT',
-    full: 'Xavier Aptitude Test',
-    target: 'XLRI Jamshedpur, GIM, XIMB',
-    badge: 'DECISION MAKING Focus',
-    desc: 'Known for its unique Decision Making section and essay component.',
-  },
-  {
-    name: 'SNAP',
-    full: 'Symbiosis National Aptitude',
-    target: 'SIBM Pune, SCMHRD',
-    badge: '60 MIN SPEED TEST',
-    desc: 'Speed-based 60-minute test for admission into Symbiosis Institutes.',
-  },
-  {
-    name: 'NMAT',
-    full: 'NMAT by GMAC',
-    target: 'NMIMS Mumbai, KJS, TAPMI',
-    badge: 'ADAPTIVE 3 ATTEMPTS',
-    desc: 'Computer-adaptive entrance test allowing up to 3 retake attempts.',
-  },
-  {
-    name: 'CMAT',
-    full: 'Common Management Test',
-    target: 'JBIMS, SIMSREE, Great Lakes',
-    badge: 'NTA GOVT EXAM',
-    desc: 'National exam conducted by NTA offering access to top government & AICTE B-schools.',
-  },
-];
-
 const sectionRef = ref<HTMLElement | null>(null);
-const horizontalTrackRef = ref<HTMLElement | null>(null);
-const horizontalWrapperRef = ref<HTMLElement | null>(null);
 const closeBtnRef = ref<HTMLButtonElement | null>(null);
-const trackProgressRef = ref<HTMLElement | null>(null);
 
 let lastFocused: HTMLElement | null = null;
-let gsapCtx: { revert: () => void } | null = null;
-
-const { initGSAP, isReducedMotion } = useScrollAnimation();
-
-onMounted(async () => {
-  if (isReducedMotion()) return;
-
-  const { gsap, ScrollTrigger } = await initGSAP();
-  if (!gsap || !ScrollTrigger || !sectionRef.value || !horizontalTrackRef.value) return;
-
-  const track = horizontalTrackRef.value;
-  const wrapper = horizontalWrapperRef.value;
-
-  gsapCtx = gsap.context(() => {
-    const mm = gsap.matchMedia();
-    // Pinned horizontal scroll on desktop only; touch devices keep native swipe + snap.
-    mm.add(MOTION_MEDIA.desktop, () => {
-      const distance = () => Math.max(0, track.scrollWidth - (wrapper?.clientWidth || track.clientWidth));
-      if (distance() <= 0) return;
-
-      gsap.to(track, {
-        x: () => -distance(),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: sectionRef.value,
-          start: 'top top+=40',
-          end: () => `+=${distance() * 1.1}`,
-          pin: true,
-          scrub: 0.8,
-          invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            if (trackProgressRef.value) {
-              trackProgressRef.value.style.transform = `scaleX(${self.progress})`;
-            }
-          },
-        },
-      });
-    });
-  }, sectionRef.value);
-});
 
 function lockScroll(lock: boolean) {
   document.body.classList.toggle('is-scroll-locked', lock);
@@ -104,7 +22,6 @@ function onModalKeydown(e: KeyboardEvent) {
     e.preventDefault();
     closeModal();
   } else if (e.key === 'Tab') {
-    // Only two focus targets inside the dialog: close button and iframe.
     const modal = closeBtnRef.value?.closest('.video-modal-shell');
     const focusables = modal
       ? Array.from(modal.querySelectorAll<HTMLElement>('button, iframe'))
@@ -123,7 +40,6 @@ function onModalKeydown(e: KeyboardEvent) {
 }
 
 function openModal(url: string, title: string) {
-  // Convert standard watch URL to embed format if necessary
   let embedUrl = url;
   if (url.includes('watch?v=')) {
     const id = url.split('v=')[1]?.split('&')[0];
@@ -152,7 +68,6 @@ watch(selectedVideoUrl, async (url) => {
 });
 
 onBeforeUnmount(() => {
-  gsapCtx?.revert();
   document.removeEventListener('keydown', onModalKeydown);
   lockScroll(false);
 });
@@ -168,44 +83,58 @@ onBeforeUnmount(() => {
             <span class="line"></span>
             <span>04 — ENTRANCE EXAMS & GUIDES</span>
           </div>
-          <h2 id="exams-heading">Master your MBA exam <em class="serif-italic">strategy.</em></h2>
+          <h2 id="exams-heading">STUDENT KHABRI &amp; <em class="serif-italic">MBA With Arshi</em></h2>
           <p class="section-desc">
-            Compare entrance exam formats and watch verified video reviews by Arshi Khan.
+            Verified B-school cutoffs, ROI analysis and 1:1 admission guidance by StudentKhabri &amp; Arshi Khan.
           </p>
-        </div>
-        <div class="track-progress" aria-hidden="true">
-          <span ref="trackProgressRef" class="track-progress-fill"></span>
         </div>
       </div>
 
-      <!-- Horizontal track: pinned scroll on desktop, native swipe with snap on touch -->
-      <div
-        ref="horizontalWrapperRef"
-        class="horizontal-wrapper"
-        role="region"
-        aria-label="Entrance exams (scroll horizontally)"
-        tabindex="0"
-      >
-        <ul ref="horizontalTrackRef" v-reveal="{ variant: 'right', stagger: 70 }" class="horizontal-track">
-          <li
-            v-for="exam in examItems"
-            :key="exam.name"
-            class="exam-card-dark"
-          >
-            <div class="card-top">
-              <span class="exam-name-large">{{ exam.name }}</span>
-              <span class="exam-badge-dark">{{ exam.badge }}</span>
-            </div>
+      <!-- Animated Typography Wall Container -->
+      <div v-reveal="'fade'" class="typography-wall-card" aria-label="MBA With Arshi Counselling Statement">
+        <div class="tech-grid-bg" aria-hidden="true"></div>
 
-            <h3 class="exam-full-name">{{ exam.full }}</h3>
-            <p class="exam-desc">{{ exam.desc }}</p>
+        <!-- Fade mask gradient overlays on left and right -->
+        <div class="edge-mask mask-left" aria-hidden="true"></div>
+        <div class="edge-mask mask-right" aria-hidden="true"></div>
 
-            <div class="card-bottom">
-              <small>TARGET B-SCHOOLS</small>
-              <strong>{{ exam.target }}</strong>
+        <div class="marquee-wall">
+          <!-- Row 1: Right to Left -->
+          <div class="marquee-row row-1">
+            <div class="marquee-track track-left">
+              <span class="marquee-content">
+                MBA WITH ARSHI IS A <span class="highlight-purple">TRUSTED MBA COUNSELLING</span> AND ADMISSION CONSULTANCY IN INDIA <span class="bullet">•</span> HELPING STUDENTS MAKE THE <span class="highlight-acid">RIGHT CHOICE</span> FOR THEIR MBA JOURNEY <span class="bullet">•</span>&nbsp;
+              </span>
+              <span class="marquee-content" aria-hidden="true">
+                MBA WITH ARSHI IS A <span class="highlight-purple">TRUSTED MBA COUNSELLING</span> AND ADMISSION CONSULTANCY IN INDIA <span class="bullet">•</span> HELPING STUDENTS MAKE THE <span class="highlight-acid">RIGHT CHOICE</span> FOR THEIR MBA JOURNEY <span class="bullet">•</span>&nbsp;
+              </span>
             </div>
-          </li>
-        </ul>
+          </div>
+
+          <!-- Row 2: Left to Right -->
+          <div class="marquee-row row-2">
+            <div class="marquee-track track-right">
+              <span class="marquee-content">
+                WITH <span class="highlight-acid">10+ YEARS OF EXPERIENCE</span> <span class="bullet">•</span> EXPERT MBA COUNSELLORS <span class="bullet">•</span> PERSONALIZED GUIDANCE ON <span class="highlight-purple">MBA COLLEGES</span> <span class="bullet">•</span> COURSES <span class="bullet">•</span> ADMISSIONS <span class="bullet">•</span> FEES <span class="bullet">•</span> PLACEMENTS <span class="bullet">•</span> ENTRANCE EXAMS <span class="bullet">•</span> CAREER OPPORTUNITIES <span class="bullet">•</span>&nbsp;
+              </span>
+              <span class="marquee-content" aria-hidden="true">
+                WITH <span class="highlight-acid">10+ YEARS OF EXPERIENCE</span> <span class="bullet">•</span> EXPERT MBA COUNSELLORS <span class="bullet">•</span> PERSONALIZED GUIDANCE ON <span class="highlight-purple">MBA COLLEGES</span> <span class="bullet">•</span> COURSES <span class="bullet">•</span> ADMISSIONS <span class="bullet">•</span> FEES <span class="bullet">•</span> PLACEMENTS <span class="bullet">•</span> ENTRANCE EXAMS <span class="bullet">•</span> CAREER OPPORTUNITIES <span class="bullet">•</span>&nbsp;
+              </span>
+            </div>
+          </div>
+
+          <!-- Row 3: Right to Left -->
+          <div class="marquee-row row-3">
+            <div class="marquee-track track-left-slow">
+              <span class="marquee-content">
+                LOOKING FOR THE <span class="highlight-purple">BEST MBA COUNSELLORS IN INDIA</span> OR RELIABLE MBA ADMISSION COUNSELLING? <span class="bullet">•</span> MBA WITH ARSHI IS HERE TO HELP YOU MAKE AN <span class="highlight-acid">INFORMED CAREER DECISION</span> <span class="bullet">•</span>&nbsp;
+              </span>
+              <span class="marquee-content" aria-hidden="true">
+                LOOKING FOR THE <span class="highlight-purple">BEST MBA COUNSELLORS IN INDIA</span> OR RELIABLE MBA ADMISSION COUNSELLING? <span class="bullet">•</span> MBA WITH ARSHI IS HERE TO HELP YOU MAKE AN <span class="highlight-acid">INFORMED CAREER DECISION</span> <span class="bullet">•</span>&nbsp;
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Video Guides Grid Header -->
@@ -341,139 +270,144 @@ onBeforeUnmount(() => {
   margin: 14px 0 0;
 }
 
-/* Thin progress line for the pinned horizontal scroll (desktop) */
-.track-progress {
-  flex: none;
-  width: 160px;
-  height: 2px;
-  margin-bottom: 12px;
-  border-radius: 2px;
-  background: rgba(255, 255, 255, 0.1);
-  overflow: hidden;
-}
-
-.track-progress-fill {
-  display: block;
-  height: 100%;
-  background: var(--accent-acid);
-  transform: scaleX(0);
-  transform-origin: left center;
-}
-
-/* Horizontal Track Wrapper */
-.horizontal-wrapper {
-  margin: 0 calc(max(5vw, 20px) * -1) 72px;
-  padding: 12px max(5vw, 20px) 16px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-padding-inline: max(5vw, 20px);
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-  outline-offset: -4px;
-}
-
-.horizontal-wrapper::-webkit-scrollbar {
-  display: none;
-}
-
-.horizontal-track {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  gap: 20px;
-  width: max-content;
-}
-
-.exam-card-dark {
+/* Animated Typography Wall Container */
+.typography-wall-card {
   position: relative;
-  width: min(320px, 80vw);
-  flex: none;
-  padding: 28px;
+  width: 100%;
+  max-width: 1340px;
+  min-height: clamp(220px, 26vw, 300px);
+  margin: 0 0 64px;
   border-radius: var(--radius-xl);
-  background: linear-gradient(160deg, rgba(34, 22, 62, 0.9), var(--surface-dark-elevated) 55%);
-  border: 1px solid var(--border-dark);
+  background: linear-gradient(145deg, rgba(18, 11, 38, 0.9), rgba(8, 5, 18, 0.96));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 32px 0;
+}
+
+.tech-grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.edge-mask {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.mask-left {
+  left: 0;
+  background: linear-gradient(90deg, #080512 0%, transparent 100%);
+}
+
+.mask-right {
+  right: 0;
+  background: linear-gradient(270deg, #080512 0%, transparent 100%);
+}
+
+.marquee-wall {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  scroll-snap-align: start;
+  gap: 16px;
+  position: relative;
+  z-index: 2;
   overflow: hidden;
-  transition:
-    transform var(--dur-med) var(--ease-out),
-    border-color var(--dur-med) ease,
-    box-shadow var(--dur-med) var(--ease-out);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .exam-card-dark:hover {
-    transform: translate3d(0, -6px, 0);
-    border-color: var(--border-dark-hover);
-    box-shadow: 0 24px 50px -24px rgba(124, 58, 237, 0.55);
-  }
-  .exam-card-dark:hover .exam-name-large {
-    color: var(--accent-acid);
-  }
-}
-
-.card-top {
+.marquee-row {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
   display: flex;
-  flex-wrap: wrap;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.track-left {
+  animation: marqueeLeft 34s linear infinite;
+}
+
+.track-right {
+  animation: marqueeRight 42s linear infinite;
+}
+
+.track-left-slow {
+  animation: marqueeLeft 38s linear infinite;
+}
+
+@keyframes marqueeLeft {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marqueeRight {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.marquee-content {
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-.exam-name-large {
-  font-size: 2.2rem;
-  font-weight: 900;
-  letter-spacing: -0.03em;
-  color: var(--primary-soft);
-  transition: color var(--dur-med) ease;
-}
-
-.exam-badge-dark {
-  padding: 4px 8px;
-  border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--accent-acid);
-  font-size: 0.6rem;
+  font-size: clamp(1.05rem, 2vw, 1.55rem);
   font-weight: 850;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(245, 242, 250, 0.72);
+  white-space: nowrap;
 }
 
-.exam-full-name {
-  margin: 0;
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: #ffffff;
+.row-1 .marquee-content {
+  opacity: 0.92;
 }
 
-.exam-desc {
-  margin: 0;
-  color: var(--ink-dark-muted);
-  font-size: 0.88rem;
-  line-height: 1.55;
+.row-2 .marquee-content {
+  font-size: clamp(0.95rem, 1.8vw, 1.4rem);
+  opacity: 0.82;
 }
 
-.card-bottom {
-  margin-top: auto;
-  padding-top: 14px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+.row-3 .marquee-content {
+  opacity: 0.95;
 }
 
-.card-bottom small {
-  display: block;
-  font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  color: var(--ink-dark-muted);
+.highlight-purple {
+  color: var(--primary-soft);
+  text-shadow: 0 0 16px rgba(167, 139, 250, 0.4);
+  padding: 0 4px;
 }
 
-.card-bottom strong {
-  display: block;
-  font-size: 0.88rem;
-  color: #ffffff;
-  margin-top: 2px;
+.highlight-acid {
+  color: var(--accent-acid);
+  text-shadow: 0 0 16px rgba(217, 255, 87, 0.3);
+  padding: 0 4px;
+}
+
+.bullet {
+  margin: 0 16px;
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 0.8em;
 }
 
 /* Video Grid */
@@ -726,39 +660,44 @@ onBeforeUnmount(() => {
   transform: translate3d(0, 16px, 0) scale(0.97);
 }
 
-@media (max-width: 1023px) {
-  .track-progress {
-    display: none;
-  }
-}
-
-@media (min-width: 1024px) {
-  /* GSAP moves the track; disable native scrolling so the two never fight. */
-  .horizontal-wrapper {
-    overflow: visible;
-    scroll-snap-type: none;
-    margin-inline: 0;
-    padding-inline: 0;
-  }
-  .horizontal-track {
-    will-change: transform;
-  }
-}
-
 @media (max-width: 640px) {
   .section-header {
     flex-direction: column;
     align-items: flex-start;
   }
-  .exam-card-dark {
-    padding: 24px;
+  .typography-wall-card {
+    padding: 24px 0;
+    min-height: 200px;
+  }
+  .marquee-wall {
+    gap: 12px;
+  }
+  .marquee-content {
+    font-size: 0.95rem;
+  }
+  .bullet {
+    margin: 0 10px;
   }
 }
 
-@media (prefers-reduced-motion: reduce) and (min-width: 1024px) {
-  /* No pin with reduced motion → allow native horizontal scroll instead. */
-  .horizontal-wrapper {
-    overflow-x: auto;
+@media (prefers-reduced-motion: reduce) {
+  .track-left,
+  .track-right,
+  .track-left-slow {
+    animation: none !important;
+  }
+  .marquee-track {
+    width: 100%;
+    flex-wrap: wrap;
+    white-space: normal;
+  }
+  .marquee-content {
+    white-space: normal;
+    text-transform: none;
+    font-size: 0.95rem;
+  }
+  .marquee-content:nth-child(2) {
+    display: none;
   }
 }
 </style>
