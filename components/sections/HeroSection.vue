@@ -170,42 +170,19 @@ onBeforeUnmount(() => {
           </div>
         </div>
 
-        <!-- Portrait & floating badges (desktop) -->
+        <!-- Hero visual video container (desktop) -->
         <div ref="visualRef" class="hero-visual-col">
           <div class="clean-visual-card">
             <div class="counselor-portrait-frame">
-              <picture>
-                <source srcset="/mentors/arshi-800.avif" type="image/avif" />
-                <source srcset="/mentors/arshi-800.webp" type="image/webp" />
-                <img
-                  src="/mentors/arshi-800.png"
-                  alt="Arshi Khan — Senior MBA Counselor"
-                  class="counselor-portrait"
-                  width="800"
-                  height="450"
-                  fetchpriority="high"
-                  decoding="async"
-                />
-              </picture>
+              <video
+                src="/videos/arshi-walking.mp4"
+                autoplay
+                muted
+                loop
+                playsinline
+                class="counselor-portrait"
+              ></video>
               <div class="portrait-overlay-gradient" aria-hidden="true"></div>
-            </div>
-
-            <!-- Verification Float Badge -->
-            <div class="live-status-badge">
-              <span class="status-pulse" aria-hidden="true"></span>
-              <div>
-                <strong>ARSHI KHAN</strong>
-                <small>Senior MBA Counselor</small>
-              </div>
-            </div>
-
-            <!-- Floating Accent Card -->
-            <div class="floating-accent-card">
-              <span class="accent-number" aria-hidden="true">01</span>
-              <div>
-                <p class="accent-title">FACT-BASED SHORTLISTING</p>
-                <small class="accent-sub">Fees • Percentile • City ROI</small>
-              </div>
             </div>
           </div>
         </div>
@@ -537,50 +514,6 @@ ul.hero-enter {
     radial-gradient(120% 60% at 50% 0%, rgba(124, 58, 237, 0.18), transparent 60%);
 }
 
-.live-status-badge,
-.floating-accent-card {
-  position: absolute;
-  z-index: 5;
-  display: flex;
-  align-items: center;
-  background: rgba(18, 12, 34, 0.88);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
-  opacity: 0;
-  transition:
-    opacity 700ms var(--ease-out) 900ms,
-    transform 900ms var(--ease-out);
-}
-
-.live-status-badge {
-  top: -16px;
-  right: -16px;
-  gap: 10px;
-  padding: 10px 16px;
-  border-radius: var(--radius-full);
-  transform: translate3d(calc(var(--px) * -10px), calc(12px + var(--py) * -10px), 0);
-}
-
-.floating-accent-card {
-  bottom: -20px;
-  left: -20px;
-  gap: 14px;
-  padding: 14px 20px;
-  border-radius: var(--radius-lg);
-  transform: translate3d(calc(var(--px) * -14px), calc(12px + var(--py) * -14px), 0);
-  transition-delay: 1020ms, 0ms;
-}
-
-.is-ready .live-status-badge {
-  opacity: 1;
-  transform: translate3d(calc(var(--px) * -10px), calc(var(--py) * -10px), 0);
-}
-
-.is-ready .floating-accent-card {
-  opacity: 1;
-  transform: translate3d(calc(var(--px) * -14px), calc(var(--py) * -14px), 0);
-}
-
 .status-pulse {
   position: relative;
   width: 10px;
@@ -603,45 +536,6 @@ ul.hero-enter {
 @keyframes pulse-ring {
   0% { transform: scale(1); opacity: 0.6; }
   80%, 100% { transform: scale(2.6); opacity: 0; }
-}
-
-.live-status-badge strong {
-  display: block;
-  font-size: 0.82rem;
-  color: #ffffff;
-  line-height: 1.1;
-}
-
-.live-status-badge small {
-  color: var(--primary-soft);
-  font-size: 0.64rem;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
-.accent-number {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--primary);
-  color: #ffffff;
-  display: grid;
-  place-items: center;
-  font-size: 0.8rem;
-  font-weight: 900;
-}
-
-.accent-title {
-  margin: 0;
-  font-size: 0.72rem;
-  font-weight: 850;
-  letter-spacing: 0.08em;
-  color: var(--accent-acid);
-}
-
-.accent-sub {
-  color: var(--ink-dark-muted);
-  font-size: 0.68rem;
 }
 
 /* ───── Compact profile chip (≤1024px) ───── */
@@ -763,9 +657,7 @@ ul.hero-enter {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-enter,
-  .live-status-badge,
-  .floating-accent-card {
+  .hero-enter {
     opacity: 1 !important;
     transform: none !important;
   }
