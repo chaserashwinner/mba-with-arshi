@@ -10,7 +10,6 @@ import FindMBAStorySection from '~/components/sections/FindMBAStorySection.vue';
 import CollegeFinderSection from '~/components/sections/CollegeFinderSection.vue';
 import ExamsHorizontalSection from '~/components/sections/ExamsHorizontalSection.vue';
 import VisualBreakSection from '~/components/sections/VisualBreakSection.vue';
-import AboutArshiSection from '~/components/sections/AboutArshiSection.vue';
 import CounsellingCTASection from '~/components/sections/CounsellingCTASection.vue';
 import SiteFooter from '~/components/SiteFooter.vue';
 
@@ -51,14 +50,11 @@ function closeDrawer() {
       <!-- 05: Editorial Visual Break Section -->
       <VisualBreakSection />
 
-      <!-- 06: Editorial About Arshi Khan Profile Section -->
-      <AboutArshiSection />
-
-      <!-- 07: 1:1 Counselling CTA & Request Booking Form -->
+      <!-- 06: 1:1 Counselling CTA & Request Booking Form -->
       <CounsellingCTASection />
     </main>
 
-    <!-- 08: Site Footer -->
+    <!-- 07: Site Footer -->
     <SiteFooter />
   </div>
 </template>

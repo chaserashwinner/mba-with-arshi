@@ -10,7 +10,6 @@ const currentYear = new Date().getFullYear();
 const navLinks = [
   { href: '#find-colleges', label: 'Find Colleges' },
   { href: '#exams', label: 'MBA Exams' },
-  { href: '#about', label: 'About Arshi Khan' },
   { href: '#counselling', label: '1:1 Counselling' },
 ];
 
