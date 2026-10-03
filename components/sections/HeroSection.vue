@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue';
-import { ArrowRightIcon, PlayIcon, EnvelopeIcon } from '@heroicons/vue/20/solid';
-import SocialIcon from '~/components/ui/SocialIcon.vue';
+import { ArrowRightIcon, PlayIcon } from '@heroicons/vue/20/solid';
 import { PORTFOLIO_DATA } from '~/data/portfolio';
 import { useScrollAnimation, hasFinePointer, MOTION_MEDIA } from '~/composables/useScrollAnimation';
 
@@ -101,7 +100,7 @@ onBeforeUnmount(() => {
           </h1>
 
           <p class="hero-bio hero-enter" style="--i: 4">
-            {{ personal.bio }}
+            Get profile-based MBA guidance from <strong>Arshi Khan</strong>, an MBA counsellor with <strong>10+ years of experience</strong> who has mentored <strong>10,000+ students</strong> in finding colleges aligned with their profile, percentile and goals.
           </p>
 
           <div class="hero-actions">
@@ -122,51 +121,6 @@ onBeforeUnmount(() => {
                 {{ personal.secondaryCtaText }}
               </a>
             </span>
-          </div>
-
-          <!-- Proof pills -->
-          <div class="hero-trust-bar hero-enter" style="--i: 7">
-            <div class="trust-pill">
-              <span class="trust-dot" aria-hidden="true"></span>
-              <strong>10+ Years</strong> Counselling Experience
-            </div>
-            <div class="trust-pill">
-              <strong>100% Honest</strong> Reviews &amp; Fees
-            </div>
-          </div>
-
-          <!-- Social links -->
-          <ul class="hero-socials hero-enter" style="--i: 8" aria-label="Follow Arshi Khan">
-            <li>
-              <a :href="personal.youtubeUrl" target="_blank" rel="noreferrer" class="social-chip" aria-label="YouTube channel (opens in new tab)">
-                <SocialIcon name="youtube" />
-              </a>
-            </li>
-            <li>
-              <a :href="personal.instagramUrl" target="_blank" rel="noreferrer" class="social-chip" aria-label="Instagram (opens in new tab)">
-                <SocialIcon name="instagram" />
-              </a>
-            </li>
-            <li>
-              <a :href="`mailto:${personal.email}`" class="social-chip" :aria-label="`Email ${personal.email}`">
-                <EnvelopeIcon aria-hidden="true" />
-              </a>
-            </li>
-            <li class="socials-caption" aria-hidden="true">{{ personal.youtubeChannel }}</li>
-          </ul>
-
-          <!-- Compact counsellor chip (tablet & mobile, where the large portrait is hidden) -->
-          <div class="mobile-profile-chip hero-enter" style="--i: 9">
-            <picture>
-              <source srcset="/mentors/arshi-400.avif" type="image/avif" />
-              <source srcset="/mentors/arshi-400.webp" type="image/webp" />
-              <img src="/mentors/arshi-400.png" alt="" width="400" height="225" loading="lazy" decoding="async" />
-            </picture>
-            <div>
-              <strong>ARSHI KHAN</strong>
-              <small>Senior MBA Counselor</small>
-            </div>
-            <span class="status-pulse" aria-hidden="true"></span>
           </div>
         </div>
 
@@ -204,7 +158,7 @@ onBeforeUnmount(() => {
   position: relative;
   min-height: 100svh;
   width: 100%;
-  padding: calc(var(--header-h) + 56px) max(5vw, 20px) 48px;
+  padding: clamp(48px, 7vh, 72px) max(5vw, 20px) 48px;
   background: var(--bg-dark);
   color: var(--ink-dark);
   display: flex;
@@ -291,9 +245,6 @@ ul.hero-enter {
   display: inline-flex;
 }
 
-.hero-trust-bar.hero-enter,
-.hero-socials.hero-enter,
-.mobile-profile-chip.hero-enter,
 .scroll-down-hint.hero-enter {
   display: flex;
 }
@@ -356,11 +307,16 @@ ul.hero-enter {
   line-height: 1.65;
 }
 
+.hero-bio strong {
+  color: #ffffff;
+  font-weight: 700;
+}
+
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-  margin-bottom: 36px;
+  margin-bottom: 0;
 }
 
 .play-dot {
@@ -538,42 +494,7 @@ ul.hero-enter {
   80%, 100% { transform: scale(2.6); opacity: 0; }
 }
 
-/* ───── Compact profile chip (≤1024px) ───── */
-.mobile-profile-chip {
-  display: none !important;
-  align-items: center;
-  gap: 12px;
-  margin-top: 28px;
-  padding: 8px 18px 8px 8px;
-  width: fit-content;
-  max-width: 100%;
-  border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
 
-.mobile-profile-chip img {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: center 25%;
-  background: #000;
-}
-
-.mobile-profile-chip strong {
-  display: block;
-  font-size: 0.8rem;
-  color: #ffffff;
-  line-height: 1.15;
-}
-
-.mobile-profile-chip small {
-  font-size: 0.64rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  color: var(--primary-soft);
-}
 
 /* ───── Scroll hint ───── */
 .scroll-down-hint {
@@ -625,14 +546,11 @@ ul.hero-enter {
   .hero-visual-col {
     display: none;
   }
-  .mobile-profile-chip.hero-enter {
-    display: flex !important;
-  }
 }
 
 @media (max-width: 640px) {
   .hero-section {
-    padding-top: calc(var(--header-h) + 36px);
+    padding-top: 36px;
     min-height: auto;
   }
   .hero-headline {
@@ -644,9 +562,6 @@ ul.hero-enter {
   }
   .scroll-down-hint {
     display: none !important;
-  }
-  .socials-caption {
-    display: none;
   }
 }
 

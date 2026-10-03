@@ -36,10 +36,6 @@ function closeDrawer() {
     <!-- Desktop-only cursor companion (not rendered on touch / reduced motion) -->
     <CursorFollower />
 
-    <!-- Site Fixed Navigation Header -->
-    <SiteHeader :menu-open="isDrawerOpen" @toggle-menu="toggleDrawer" />
-    <MobileDrawer :is-open="isDrawerOpen" @close="closeDrawer" />
-
     <main id="main-content" tabindex="-1">
       <!-- 01: Hero Section (staggered entrance + subtle scroll-away) -->
       <HeroSection />
