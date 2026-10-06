@@ -44,13 +44,13 @@ function closeDrawer() {
       <!-- 03: Interactive College Finder & Profile Shortlist Tool -->
       <CollegeFinderSection />
 
-      <!-- 04: STUDENT KHABRI & MBA With Arshi Animated Lines & Video Reviews -->
+      <!-- 04: Featured Counselling Video Guides -->
       <ExamsHorizontalSection />
 
-      <!-- 05: Editorial Visual Break Section -->
+      <!-- Editorial Visual Break Section -->
       <VisualBreakSection />
 
-      <!-- 06: 1:1 Counselling CTA & Request Booking Form -->
+      <!-- 05: 1:1 Counselling CTA & Request Booking Form -->
       <CounsellingCTASection />
     </main>
 

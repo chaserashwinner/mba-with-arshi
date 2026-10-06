@@ -14,9 +14,7 @@ const panelRef = ref<HTMLElement | null>(null);
 // #videos / #guides; #guides never existed, so it now targets the exams section.
 const links = [
   { href: '#find-colleges', label: 'Find Colleges' },
-  { href: '#videos', label: 'Videos' },
-  { href: '#exams', label: 'Exam Guides' },
-  { href: '#about', label: 'About Arshi' },
+  { href: '#exams', label: 'Video Guides' },
   { href: '#counselling', label: 'Get Counselling' },
 ];
 

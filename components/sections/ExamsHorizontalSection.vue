@@ -74,73 +74,18 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <section ref="sectionRef" class="mba-exams-section" id="exams" aria-labelledby="exams-heading">
-    <div class="section-inner">
+  <section ref="sectionRef" class="mba-exams-section" id="exams" aria-labelledby="videos-heading">
+    <div class="section-inner" id="videos">
       <!-- Section Header -->
-      <div class="section-header">
-        <div v-reveal="{ stagger: true }" class="header-copy">
-          <div class="eyebrow">
-            <span class="line"></span>
-            <span>04 — ENTRANCE EXAMS & GUIDES</span>
-          </div>
-          <h2 id="exams-heading">STUDENT KHABRI &amp; <em class="serif-italic">MBA With Arshi</em></h2>
-          <p class="section-desc">
-            Verified B-school cutoffs, ROI analysis and 1:1 admission guidance by StudentKhabri &amp; Arshi Khan.
-          </p>
+      <div v-reveal="{ stagger: true }" class="section-header">
+        <div class="eyebrow">
+          <span class="line"></span>
+          <span>04 — FEATURED COUNSELLING GUIDES</span>
         </div>
-      </div>
-
-      <!-- Animated Typography Wall Container -->
-      <div v-reveal="'fade'" class="typography-wall-card" aria-label="MBA With Arshi Counselling Statement">
-        <div class="tech-grid-bg" aria-hidden="true"></div>
-
-        <!-- Fade mask gradient overlays on left and right -->
-        <div class="edge-mask mask-left" aria-hidden="true"></div>
-        <div class="edge-mask mask-right" aria-hidden="true"></div>
-
-        <div class="marquee-wall">
-          <!-- Row 1: Right to Left -->
-          <div class="marquee-row row-1">
-            <div class="marquee-track track-left">
-              <span class="marquee-content">
-                MBA WITH ARSHI IS A <span class="highlight-purple">TRUSTED MBA COUNSELLING</span> AND ADMISSION CONSULTANCY IN INDIA <span class="bullet">•</span> HELPING STUDENTS MAKE THE <span class="highlight-acid">RIGHT CHOICE</span> FOR THEIR MBA JOURNEY <span class="bullet">•</span>&nbsp;
-              </span>
-              <span class="marquee-content" aria-hidden="true">
-                MBA WITH ARSHI IS A <span class="highlight-purple">TRUSTED MBA COUNSELLING</span> AND ADMISSION CONSULTANCY IN INDIA <span class="bullet">•</span> HELPING STUDENTS MAKE THE <span class="highlight-acid">RIGHT CHOICE</span> FOR THEIR MBA JOURNEY <span class="bullet">•</span>&nbsp;
-              </span>
-            </div>
-          </div>
-
-          <!-- Row 2: Left to Right -->
-          <div class="marquee-row row-2">
-            <div class="marquee-track track-right">
-              <span class="marquee-content">
-                WITH <span class="highlight-acid">10+ YEARS OF EXPERIENCE</span> <span class="bullet">•</span> EXPERT MBA COUNSELLORS <span class="bullet">•</span> PERSONALIZED GUIDANCE ON <span class="highlight-purple">MBA COLLEGES</span> <span class="bullet">•</span> COURSES <span class="bullet">•</span> ADMISSIONS <span class="bullet">•</span> FEES <span class="bullet">•</span> PLACEMENTS <span class="bullet">•</span> ENTRANCE EXAMS <span class="bullet">•</span> CAREER OPPORTUNITIES <span class="bullet">•</span>&nbsp;
-              </span>
-              <span class="marquee-content" aria-hidden="true">
-                WITH <span class="highlight-acid">10+ YEARS OF EXPERIENCE</span> <span class="bullet">•</span> EXPERT MBA COUNSELLORS <span class="bullet">•</span> PERSONALIZED GUIDANCE ON <span class="highlight-purple">MBA COLLEGES</span> <span class="bullet">•</span> COURSES <span class="bullet">•</span> ADMISSIONS <span class="bullet">•</span> FEES <span class="bullet">•</span> PLACEMENTS <span class="bullet">•</span> ENTRANCE EXAMS <span class="bullet">•</span> CAREER OPPORTUNITIES <span class="bullet">•</span>&nbsp;
-              </span>
-            </div>
-          </div>
-
-          <!-- Row 3: Right to Left -->
-          <div class="marquee-row row-3">
-            <div class="marquee-track track-left-slow">
-              <span class="marquee-content">
-                LOOKING FOR THE <span class="highlight-purple">BEST MBA COUNSELLORS IN INDIA</span> OR RELIABLE MBA ADMISSION COUNSELLING? <span class="bullet">•</span> MBA WITH ARSHI IS HERE TO HELP YOU MAKE AN <span class="highlight-acid">INFORMED CAREER DECISION</span> <span class="bullet">•</span>&nbsp;
-              </span>
-              <span class="marquee-content" aria-hidden="true">
-                LOOKING FOR THE <span class="highlight-purple">BEST MBA COUNSELLORS IN INDIA</span> OR RELIABLE MBA ADMISSION COUNSELLING? <span class="bullet">•</span> MBA WITH ARSHI IS HERE TO HELP YOU MAKE AN <span class="highlight-acid">INFORMED CAREER DECISION</span> <span class="bullet">•</span>&nbsp;
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Video Guides Grid Header -->
-      <div v-reveal="{ stagger: true }" class="video-grid-header" id="videos">
-        <h3>Featured Counselling Video Guides</h3>
-        <p>Watch in-depth reviews on fees, ROI, cutoffs, and profile fit.</p>
+        <h2 id="videos-heading">Featured Counselling <em class="serif-italic">Video Guides</em></h2>
+        <p class="section-desc">
+          Watch in-depth reviews on fees, ROI, cutoffs, and profile fit.
+        </p>
       </div>
 
       <!-- Video Guides Grid -->
@@ -248,14 +193,13 @@ onBeforeUnmount(() => {
 
 .section-header {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 32px;
-  margin-bottom: 40px;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 48px;
 }
 
 .section-header h2 {
-  margin: 12px 0 0;
+  margin: 0;
   font-size: clamp(2.2rem, 4.2vw, 3.8rem);
   line-height: 1.05;
   letter-spacing: -0.04em;
@@ -267,167 +211,10 @@ onBeforeUnmount(() => {
 .section-desc {
   color: var(--ink-dark-muted);
   font-size: 1.05rem;
-  margin: 14px 0 0;
-}
-
-/* Animated Typography Wall Container */
-.typography-wall-card {
-  position: relative;
-  width: 100%;
-  max-width: 1340px;
-  min-height: clamp(220px, 26vw, 300px);
-  margin: 0 0 64px;
-  border-radius: var(--radius-xl);
-  background: linear-gradient(145deg, rgba(18, 11, 38, 0.9), rgba(8, 5, 18, 0.96));
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  padding: 32px 0;
-}
-
-.tech-grid-bg {
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
-  background-size: 24px 24px;
-  opacity: 0.4;
-  pointer-events: none;
-}
-
-.edge-mask {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 80px;
-  z-index: 10;
-  pointer-events: none;
-}
-
-.mask-left {
-  left: 0;
-  background: linear-gradient(90deg, #080512 0%, transparent 100%);
-}
-
-.mask-right {
-  right: 0;
-  background: linear-gradient(270deg, #080512 0%, transparent 100%);
-}
-
-.marquee-wall {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  position: relative;
-  z-index: 2;
-  overflow: hidden;
-}
-
-.marquee-row {
-  width: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-  display: flex;
-}
-
-.marquee-track {
-  display: flex;
-  width: max-content;
-  will-change: transform;
-}
-
-.track-left {
-  animation: marqueeLeft 34s linear infinite;
-}
-
-.track-right {
-  animation: marqueeRight 42s linear infinite;
-}
-
-.track-left-slow {
-  animation: marqueeLeft 38s linear infinite;
-}
-
-@keyframes marqueeLeft {
-  0% {
-    transform: translate3d(0, 0, 0);
-  }
-  100% {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
-@keyframes marqueeRight {
-  0% {
-    transform: translate3d(-50%, 0, 0);
-  }
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-.marquee-content {
-  display: inline-flex;
-  align-items: center;
-  font-size: clamp(1.05rem, 2vw, 1.55rem);
-  font-weight: 850;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: rgba(245, 242, 250, 0.72);
-  white-space: nowrap;
-}
-
-.row-1 .marquee-content {
-  opacity: 0.92;
-}
-
-.row-2 .marquee-content {
-  font-size: clamp(0.95rem, 1.8vw, 1.4rem);
-  opacity: 0.82;
-}
-
-.row-3 .marquee-content {
-  opacity: 0.95;
-}
-
-.highlight-purple {
-  color: var(--primary-soft);
-  text-shadow: 0 0 16px rgba(167, 139, 250, 0.4);
-  padding: 0 4px;
-}
-
-.highlight-acid {
-  color: var(--accent-acid);
-  text-shadow: 0 0 16px rgba(217, 255, 87, 0.3);
-  padding: 0 4px;
-}
-
-.bullet {
-  margin: 0 16px;
-  color: rgba(255, 255, 255, 0.25);
-  font-size: 0.8em;
+  margin: 0;
 }
 
 /* Video Grid */
-.video-grid-header {
-  margin-bottom: 28px;
-}
-
-.video-grid-header h3 {
-  margin: 0 0 6px;
-  font-size: clamp(1.4rem, 2.4vw, 1.8rem);
-  font-weight: 850;
-  letter-spacing: -0.02em;
-  color: #ffffff;
-}
-
-.video-grid-header p {
-  margin: 0;
-  color: var(--ink-dark-muted);
-}
-
 .videos-grid {
   list-style: none;
   margin: 0;
@@ -585,7 +372,7 @@ onBeforeUnmount(() => {
   color: #ffffff;
 }
 
-/* Modal (teleported to <body>, so styles must not depend on the section) */
+/* Modal */
 .video-modal-backdrop {
   position: fixed;
   inset: 0;
@@ -658,46 +445,5 @@ onBeforeUnmount(() => {
 .modal-leave-to .video-modal-shell {
   opacity: 0;
   transform: translate3d(0, 16px, 0) scale(0.97);
-}
-
-@media (max-width: 640px) {
-  .section-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .typography-wall-card {
-    padding: 24px 0;
-    min-height: 200px;
-  }
-  .marquee-wall {
-    gap: 12px;
-  }
-  .marquee-content {
-    font-size: 0.95rem;
-  }
-  .bullet {
-    margin: 0 10px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .track-left,
-  .track-right,
-  .track-left-slow {
-    animation: none !important;
-  }
-  .marquee-track {
-    width: 100%;
-    flex-wrap: wrap;
-    white-space: normal;
-  }
-  .marquee-content {
-    white-space: normal;
-    text-transform: none;
-    font-size: 0.95rem;
-  }
-  .marquee-content:nth-child(2) {
-    display: none;
-  }
 }
 </style>
